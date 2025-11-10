@@ -1,5 +1,11 @@
-# React + TypeScript + Vite
+# PCF Uptime Dashboard Web
 
+## Related repositories
+
+Docs: [PCF-Uptime-Dashboard](https://github.com/Oddert/PCF-Uptime-Dashboard)
+Service (API): [PCF-Uptime-Dashboard-Service](https://github.com/Oddert/PCF-Uptime-Dashboard-Service)
+
+<!-- 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -70,4 +76,4 @@ export default defineConfig([
     },
   },
 ])
-```
+``` -->
