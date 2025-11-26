@@ -6,8 +6,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint --config eslint.config.mjs --ext .js,.jsx,.ts,.tsx, src/**/*",
-    "lint:fix": "eslint --config eslint.config.mjs --fix --ext .js,.jsx,.ts,.tsx, src/**/*",
+    "lint": "eslint --config eslint.config.js --ext .js,.jsx,.ts,.tsx, src/**/*",
+    "lint:fix": "eslint --config eslint.config.js --fix --ext .js,.jsx,.ts,.tsx, src/**/*",
     "preview": "vite preview"
   },
   "dependencies": {
