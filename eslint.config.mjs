@@ -10,6 +10,8 @@ import eslintPluginSecurity from 'eslint-plugin-security'
 import eslintPluginImport from 'eslint-plugin-import'
 import tseslint from 'typescript-eslint'
 
+console.log(import.meta.dirname);
+
 export default defineConfig([
     {
         ignores: [
@@ -22,8 +24,9 @@ export default defineConfig([
     {
         languageOptions: {
             parserOptions: {
-                project: ['./tsconfig.json'],
-                tsconfigRootDir: import.meta.dirname,
+                // project: ['./tsconfig.json'],
+                // tsconfigRootDir: import.meta.dirname,
+                projectService: import.meta.dirname,
             },
         },
         settings: {
