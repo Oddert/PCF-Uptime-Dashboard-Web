@@ -1,5 +1,8 @@
 {
+  "compilerOptions": {},
+  "exclude": ["node_modules/**/*"],
   "files": [],
+  "include": ["src", "custom.d.ts"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
