@@ -1,4 +1,4 @@
-import { type ThemeOptions, createTheme } from "@mui/material";
+import { type ThemeOptions, createTheme } from '@mui/material';
 
 const themeOptions: ThemeOptions = {};
 
