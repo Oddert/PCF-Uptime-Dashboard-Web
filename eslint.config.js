@@ -179,6 +179,19 @@ export default defineConfig([
             // Disallow the use of the add operand vs template strings.
             'prefer-template': 'error',
 
+            'prettier/prettier': [
+                'error',
+                {
+                    endOfLine: 'lf',
+                    singleQuote: true,
+                    jsxSingleQuote: true,
+                    useTabs: true,
+                    printWidth: 80,
+                    trailingComma: 'all',
+                    disableLanguages: ['html', 'scss'],
+                },
+            ],
+
             // Enforce explicit Fragment tags instead of implicit 'empty' tags.
             'react/jsx-fragments': ['warn', 'element'],
 

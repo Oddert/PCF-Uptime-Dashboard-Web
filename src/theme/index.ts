@@ -1,7 +1,7 @@
-import { createTheme, type ThemeOptions } from "@mui/material";
+import { type ThemeOptions, createTheme } from "@mui/material";
 
-const themeOptions: ThemeOptions = {}
+const themeOptions: ThemeOptions = {};
 
-const theme = createTheme(themeOptions)
+const theme = createTheme(themeOptions);
 
-export default theme
+export default theme;
