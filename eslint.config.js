@@ -150,6 +150,9 @@ export default defineConfig([
                 },
             ],
 
+            // Set standard indentation at 4 - SPACES
+            'indent': ['error', 4],
+
             // Enforce single quotes.
             'jsx-quotes': [
                 'error',
@@ -179,16 +182,18 @@ export default defineConfig([
             // Disallow the use of the add operand vs template strings.
             'prefer-template': 'error',
 
+            // Override prettier settings
             'prettier/prettier': [
                 'error',
                 {
-                    endOfLine: 'lf',
-                    singleQuote: true,
-                    jsxSingleQuote: true,
-                    useTabs: true,
-                    printWidth: 80,
-                    trailingComma: 'all',
                     disableLanguages: ['html', 'scss'],
+                    endOfLine: 'lf',
+                    jsxSingleQuote: true,
+                    printWidth: 80,
+                    singleQuote: true,
+                    tabWidth: 4,
+                    trailingComma: 'all',
+                    useTabs: false,
                 },
             ],
 
