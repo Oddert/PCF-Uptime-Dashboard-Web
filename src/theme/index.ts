@@ -1,6 +1,10 @@
 import { type ThemeOptions, createTheme } from '@mui/material';
 
-const themeOptions: ThemeOptions = {};
+import breakpoints from './breakpoints';
+
+const themeOptions: ThemeOptions = {
+    breakpoints,
+};
 
 const theme = createTheme(themeOptions);
 

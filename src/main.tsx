@@ -8,6 +8,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
+import FallbackError from './components/FallbackError/FallbackError.tsx';
+import ErrorBoundary from './hocs/ErrorBoundary/ErrorBoundary.tsx';
+import ErrorMessage from './hocs/ErrorMessage/ErrorMessage.tsx';
 import store from './redux/constants/store.ts';
 import theme from './theme/index.ts';
 
@@ -21,7 +24,11 @@ createRoot(document.getElementById('root')!).render(
         <ReduxProvider store={store}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <ThemeProvider theme={theme}>
-                    <App />
+                    <ErrorBoundary fallback={<FallbackError />}>
+                        <ErrorMessage>
+                            <App />
+                        </ErrorMessage>
+                    </ErrorBoundary>
                 </ThemeProvider>
             </LocalizationProvider>
         </ReduxProvider>
