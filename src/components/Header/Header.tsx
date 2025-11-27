@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +21,6 @@ const Header = () => {
     const { t } = useTranslation();
 
     // const sidebarMode = useAppSelector(getSidebarMode);
-    const sidebarMode = 'static';
 
     const [open, setOpen] = useState(false);
 
@@ -37,8 +36,8 @@ const Header = () => {
         setOpen(!open);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const isStatic = useMemo(() => sidebarMode === 'static', [sidebarMode]);
+    // const isStatic = useMemo(() => sidebarMode === 'static', [sidebarMode]);
+    const isStatic = false;
 
     return (
         <Fragment>
@@ -53,6 +52,7 @@ const Header = () => {
                             {
                                 marginRight: 5,
                             },
+                            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                             open && !isStatic ? { display: 'none' } : false,
                         ]}
                     >
@@ -95,6 +95,7 @@ const Header = () => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
             {isStatic ? (
                 <SidebarDiscreet
                     onClose={handleDrawerClose}

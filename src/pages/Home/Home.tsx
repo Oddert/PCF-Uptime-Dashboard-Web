@@ -1,12 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Button, Container, TextField, Typography } from '@mui/material';
 
-import { Container, Typography } from '@mui/material';
-
-import reactLogo from '../../assets/react.svg';
 import { useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
-
-import viteLogo from '/vite.svg';
 
 import './Home.css';
 
@@ -19,7 +14,6 @@ import './Home.css';
  * @subcategory Home
  */
 const Home = () => {
-    const [count, setCount] = useState(0);
     const firstName = useAppSelector(getUserFirstName);
     return (
         <Container
@@ -39,7 +33,11 @@ const Home = () => {
             >
                 Welcome {firstName}
             </Typography>
-            <Fragment>
+            <TextField />
+            <Button variant='contained'>Contained</Button>
+            <Button variant='outlined'>Outlined</Button>
+            <Button variant='text'>Text</Button>
+            {/* <Fragment>
                 <div>
                     <a href='https://vite.dev' target='_blank' rel='noreferrer'>
                         <img src={viteLogo} className='logo' alt='Vite logo' />
@@ -72,7 +70,7 @@ const Home = () => {
                 <p className='read-the-docs'>
                     Click on the Vite and React logos to learn more
                 </p>
-            </Fragment>
+            </Fragment> */}
         </Container>
     );
 };
