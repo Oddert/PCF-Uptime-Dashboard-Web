@@ -14,6 +14,7 @@ export const AuthLSService = Object.freeze({
         try {
             localStorage.removeItem(PCF_DASHBOARD_ACCESS_TOKEN_LS_KEY);
         } catch (error) {
+            console.error(error);
             return null;
         }
     },
@@ -25,6 +26,7 @@ export const AuthLSService = Object.freeze({
         try {
             localStorage.removeItem(PCF_DASHBOARD_REFRESH_TOKEN_LS_KEY);
         } catch (error) {
+            console.error(error);
             return null;
         }
     },
@@ -40,6 +42,7 @@ export const AuthLSService = Object.freeze({
             );
             return token;
         } catch (error) {
+            console.error(error);
             return null;
         }
     },
@@ -55,6 +58,7 @@ export const AuthLSService = Object.freeze({
             );
             return token;
         } catch (error) {
+            console.error(error);
             return null;
         }
     },
