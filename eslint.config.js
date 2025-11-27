@@ -96,11 +96,17 @@ export default defineConfig([
     },
     {
         rules: {
+            // Empty functions frequently used as placeholder values on props.
+            '@typescript-eslint/no-empty-function': 'off',
+
             // Allow empty TS interfaces.
             '@typescript-eslint/no-empty-object-type': 'off',
 
             // Many redux utilities are floating promises, e.g. dispatch().
-            '@typescript-eslint/no-floating/promises': 'off',
+            '@typescript-eslint/no-floating-promises': 'off',
+
+            // Allows redux thunked actions with no 'await'.
+            '@typescript-eslint/require-await': 'off',
 
             // Disallows inline blocks without curly brackets, e.g. inline 'if'.
             'curly': [
@@ -151,7 +157,7 @@ export default defineConfig([
             ],
 
             // Set standard indentation at 4 - SPACES
-            'indent': ['error', 4],
+            // 'indent': ['error', 4],
 
             // Enforce single quotes.
             'jsx-quotes': [
