@@ -36,25 +36,28 @@ const useAuthToken = () => {
         dispatch(
             authenticateUser({
                 accessToken,
-                accessTokenExpires: accessDecoded.exp || 0,
+                accessTokenExpires: accessDecoded.exp ?? 0,
                 refreshToken,
-                refreshTokenExpires: refreshDecoded.exp || 0,
+                refreshTokenExpires: refreshDecoded.exp ?? 0,
             }),
         );
 
         const userDetailsResponse = await APIService.userDetails();
 
-        if (!userDetailsResponse?.user) {
-            throw new Error('Issue encountered trying to query user details.');
-        }
+        // if (!userDetailsResponse.user) {
+        //     throw new Error('Issue encountered trying to query user details.');
+        // }
 
         dispatch(
             writeUserDetails({
-                user: userDetailsResponse?.user,
+                user: userDetailsResponse.user,
             }),
         );
 
-        return callback ? callback() : null;
+        if (callback) {
+            callback();
+        }
+        return null;
     };
 
     /**
@@ -85,7 +88,7 @@ const useAuthToken = () => {
             const refreshDecoded = jwt.jwtDecode(refreshToken);
 
             if (
-                !accessDecoded?.exp ||
+                !accessDecoded.exp ||
                 accessDecoded.exp <= new Date().getTime() + timeoutOffset
             ) {
                 refreshAuth(callback);
@@ -99,7 +102,8 @@ const useAuthToken = () => {
                 refreshDecoded,
                 callback,
             );
-        } catch (error) {
+        } catch (error: unknown) {
+            console.error(error);
             refreshAuth(callback);
             return;
         }

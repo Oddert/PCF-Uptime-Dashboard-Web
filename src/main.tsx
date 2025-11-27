@@ -7,7 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { createRoot } from 'react-dom/client';
 
-import App from './App.tsx';
+import App from './components/App/App.tsx';
 import FallbackError from './components/FallbackError/FallbackError.tsx';
 import ErrorBoundary from './hocs/ErrorBoundary/ErrorBoundary.tsx';
 import ErrorMessage from './hocs/ErrorMessage/ErrorMessage.tsx';

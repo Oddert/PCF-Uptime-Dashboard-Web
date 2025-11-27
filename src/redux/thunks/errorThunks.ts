@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
 import { AxiosError } from 'axios';
 
 import type { AppDispatch } from '../constants/store';
@@ -12,26 +18,26 @@ import { type IPayloadWriteError, writeError } from '../slices/errorSlice';
  */
 export const writeErrorBoundary =
     (errorArgs: Partial<IPayloadWriteError>) =>
-        async (dispatch: AppDispatch) => {
-            try {
-                dispatch(
-                    writeError(
-                        Object.assign(
-                            {
-                                title: 'Something went wrong',
-                                message: 'An unexpected error was encountered.',
-                                error: 'Application error',
-                                stackTrace: '',
-                            },
-                            errorArgs,
-                        ),
+    async (dispatch: AppDispatch) => {
+        try {
+            dispatch(
+                writeError(
+                    Object.assign(
+                        {
+                            title: 'Something went wrong',
+                            message: 'An unexpected error was encountered.',
+                            error: 'Application error',
+                            stackTrace: '',
+                        },
+                        errorArgs,
                     ),
-                );
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
-        };
+                ),
+            );
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    };
 
 /**
  * Ingests and attempts to parse a series of expected errors, with preference to particular error messages.
@@ -58,7 +64,7 @@ export const intakeError =
                 // Condition 1.2: All other Axios errors.
                 if (
                     error?.response?.data &&
-                    !/<\!DOCTYPE html>/.test(error.response.data)
+                    !/<!DOCTYPE html>/.test(error.response.data)
                 ) {
                     // Condition 1.2.1: If the error is coming from our backend (request gets through at least), use our standard response format.
                     dispatch(

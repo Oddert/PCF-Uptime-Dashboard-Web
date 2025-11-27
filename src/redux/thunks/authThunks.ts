@@ -4,7 +4,6 @@ import type { IUser } from '../../types/Auth.types';
 import type { IStandardResponse } from '../../types/Request.types';
 import type { AppDispatch, RootState } from '../constants/store';
 
-import router, { ROUTES_FACTORY } from '../../constants/routerConstants';
 import APIService from '../../services/api.service';
 import { AuthLSService } from '../../services/authLs.service';
 import { getRefreshTokenPending } from '../selectors/authSelectors';
@@ -36,23 +35,23 @@ export const handleAuthResponse = (
 ) => {
     return async (dispatch: AppDispatch) => {
         try {
-            if (!response?.accessToken) {
+            if (!response.accessToken) {
                 throw new Error(
                     'No valid token received when trying to login.',
                 );
             }
 
-            const accessDecoded = jwt.jwtDecode(response?.accessToken);
-            const refreshDecoded = jwt.jwtDecode(response?.refreshToken);
+            const accessDecoded = jwt.jwtDecode(response.accessToken);
+            const refreshDecoded = jwt.jwtDecode(response.refreshToken);
 
             AuthLSService.writeAccessToken(response.accessToken);
             AuthLSService.writeRefreshToken(response.refreshToken);
             dispatch(
                 authenticateUser({
-                    accessToken: response?.accessToken,
-                    accessTokenExpires: accessDecoded.exp || 0,
-                    refreshToken: response?.refreshToken,
-                    refreshTokenExpires: refreshDecoded.exp || 0,
+                    accessToken: response.accessToken,
+                    accessTokenExpires: accessDecoded.exp ?? 0,
+                    refreshToken: response.refreshToken,
+                    refreshTokenExpires: refreshDecoded.exp ?? 0,
                 }),
             );
 
@@ -65,8 +64,9 @@ export const handleAuthResponse = (
             if (callback) {
                 callback();
             }
-        } catch (error: any) {
-            if (error.status === 404) {
+        } catch (error: unknown) {
+            // @ts-expect-error unknown error
+            if (error?.status === 404) {
                 dispatch(setIncorrectDetails());
             } else {
                 dispatch(intakeError(error));
@@ -91,8 +91,9 @@ export const loginUser =
             } else {
                 dispatch(handleAuthResponse(response));
             }
-        } catch (error: any) {
-            if (error.status === 404) {
+        } catch (error: unknown) {
+            // @ts-expect-error unknown error
+            if (error?.status === 404) {
                 dispatch(setIncorrectDetails());
             } else {
                 dispatch(intakeError(error));
@@ -114,28 +115,29 @@ export const registerUser =
         displayName: string,
         languages: string,
     ) =>
-        async (dispatch: AppDispatch) => {
-            try {
-                const response = await APIService.registerUser(
-                    username,
-                    password,
-                    displayName,
-                    languages,
-                );
+    async (dispatch: AppDispatch) => {
+        try {
+            const response = await APIService.registerUser(
+                username,
+                password,
+                displayName,
+                languages,
+            );
 
-                if (response.status === 404) {
-                    dispatch(setIncorrectDetails());
-                } else {
-                    dispatch(handleAuthResponse(response));
-                }
-            } catch (error: any) {
-                if (error.status === 404) {
-                    dispatch(setIncorrectDetails());
-                } else {
-                    dispatch(intakeError(error));
-                }
+            if (response.status === 404) {
+                dispatch(setIncorrectDetails());
+            } else {
+                dispatch(handleAuthResponse(response));
             }
-        };
+        } catch (error: unknown) {
+            // @ts-expect-error unknown error
+            if (error?.status === 404) {
+                dispatch(setIncorrectDetails());
+            } else {
+                dispatch(intakeError(error));
+            }
+        }
+    };
 
 /**
  * Logs out a user, clears their stored details, and redirects them to the login page.
@@ -176,18 +178,20 @@ export const refreshAuthentication = (callback?: () => void) => {
 
             if (response.status === 401 || response.status === 403) {
                 dispatch(userUnauthenticated());
-                router.navigate(
-                    ROUTES_FACTORY.LOGIN(
-                        `${window.location.pathname}${window.location.search}`,
-                    ),
-                );
+                // router.navigate(
+                //     ROUTES_FACTORY.LOGIN(
+                //         `${window.location.pathname}${window.location.search}`,
+                //     ),
+                // );
             } else {
                 dispatch(handleAuthResponse(response, callback));
             }
-        } catch (error: any) {
-            if (error.status === 401 || error.status === 403) {
+        } catch (error: unknown) {
+            // @ts-expect-error unknown error
+            if (error?.status === 401 || error?.status === 403) {
                 dispatch(userUnauthenticated());
-            } else if (error.status === 404) {
+                // @ts-expect-error unknown error
+            } else if (error?.status === 404) {
                 dispatch(setIncorrectDetails());
             } else {
                 dispatch(intakeError(error));
@@ -209,25 +213,27 @@ export const refreshAuthentication = (callback?: () => void) => {
  */
 export const checkAuth =
     (margin?: number) =>
-        async (dispatch: AppDispatch, getState: () => RootState) => {
-            try {
-                const state = getState();
-                if (
-                    state.auth.accessTokenExpires <=
-                new Date().getTime() - (margin || 120_000)
-                ) {
-                    dispatch(refreshAuthentication());
-                }
-            } catch (error: any) {
-                if (error.status === 401 || error.status === 403) {
-                    dispatch(userUnauthenticated());
-                } else if (error.status === 404) {
-                    dispatch(setIncorrectDetails());
-                } else {
-                    dispatch(intakeError(error));
-                }
+    async (dispatch: AppDispatch, getState: () => RootState) => {
+        try {
+            const state = getState();
+            if (
+                state.auth.accessTokenExpires <=
+                new Date().getTime() - (margin ?? 120_000)
+            ) {
+                dispatch(refreshAuthentication());
             }
-        };
+        } catch (error: unknown) {
+            // @ts-expect-error unknown error
+            if (error?.status === 401 || error?.status === 403) {
+                dispatch(userUnauthenticated());
+                // @ts-expect-error unknown error
+            } else if (error?.status === 404) {
+                dispatch(setIncorrectDetails());
+            } else {
+                dispatch(intakeError(error));
+            }
+        }
+    };
 
 /**
  * Logs the user out and clears user details.
@@ -239,7 +245,7 @@ export const userLogout = () => async (dispatch: AppDispatch) => {
         AuthLSService.deleteAccessToken();
         AuthLSService.deleteRefreshToken();
         dispatch(logoutAuth());
-    } catch (error: any) {
+    } catch (error: unknown) {
         dispatch(intakeError(error));
     }
 };

@@ -2,11 +2,13 @@ import { Fragment, useState } from 'react';
 
 import { Container, Typography } from '@mui/material';
 
+import reactLogo from '../../assets/react.svg';
 import { useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
 
-import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
+
+import './Home.css';
 
 /**
  * Main home page component.

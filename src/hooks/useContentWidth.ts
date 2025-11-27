@@ -18,15 +18,13 @@ if (!breakpoints.values) {
     );
 }
 
-const bp = breakpoints?.values
-    ? breakpoints.values
-    : {
-          xs: 0,
-          sm: 600,
-          md: 900,
-          lg: 1200,
-          xl: 1536,
-      };
+const bp = breakpoints.values ?? {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+};
 
 /**
  * Provides one of a set of pre-set content widths depending on window width.
@@ -75,6 +73,7 @@ const useContentWidth = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [breakpoint]);
 
     return { breakpoint, contentWidth, windowWidth };

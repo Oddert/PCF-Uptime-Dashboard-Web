@@ -1,4 +1,4 @@
-import { Component, ErrorInfo, JSX } from 'react';
+import { Component, type ErrorInfo, type JSX } from 'react';
 
 interface IProps {
     children: JSX.Element | JSX.Element[] | null;
@@ -17,7 +17,7 @@ class ErrorBoundary extends Component<IProps, IState> {
         };
     }
 
-    static getDerivedStateFromError(error: any) {
+    static getDerivedStateFromError(error: unknown) {
         console.error(error);
         return {
             error: true,

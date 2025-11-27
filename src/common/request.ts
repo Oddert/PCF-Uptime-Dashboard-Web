@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import axios from 'axios';
 
 import store from '../redux/constants/store';
 import { refreshAuthentication } from '../redux/thunks/authThunks';
-import { AuthLSService } from '../services/AuthLSService';
+import { AuthLSService } from '../services/authLs.service';
 import { getServerURL } from '../utils/requestUtils';
 
 /**
@@ -25,9 +27,9 @@ export const createBlankRequest = () => {
     });
 
     requestClient.interceptors.request.use((config) => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('[request]', config.url);
-        }
+        // if (process.env.NODE_ENV === 'development') {
+        //     console.log('[request]', config.url);
+        // }
         const token = AuthLSService.getAccessToken();
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
