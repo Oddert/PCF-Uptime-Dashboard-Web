@@ -4,7 +4,9 @@ import { RouterProvider } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 
 import router from '../../constants/routerConstants';
+import { useAppDispatch } from '../../hooks/ReduxHookWrappers';
 import useAuthToken from '../../hooks/useAuthToken';
+import { fetchAllInstances } from '../../redux/thunks/instanceThunks';
 
 import './App.css';
 
@@ -15,7 +17,7 @@ import './App.css';
  * @component
  */
 const App = () => {
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     // const { t } = useTranslation();
 
@@ -23,12 +25,13 @@ const App = () => {
 
     useEffect(() => {
         const loadAppBaseInfo = () => {
-            // dispatch(refreshCategories(t));
+            dispatch(fetchAllInstances());
             // dispatch(refreshBudgets(t));
             // dispatch(refreshCards(t));
             // dispatch(refreshScenarios(t));
         };
         conditionallyRefreshAuth(loadAppBaseInfo);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
