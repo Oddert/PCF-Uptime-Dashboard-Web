@@ -15,7 +15,8 @@ import {
     // ReceiptLong as IconTransactions,
     // Settings as IconProfile,
     // StackedBarChart as IconBudget,
-    WaterfallChart as IconAllData,
+    // WaterfallChart as IconAllData,
+    Home as IconHome,
 } from '@mui/icons-material';
 import type { SvgIconTypeMap } from '@mui/material';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
@@ -133,7 +134,7 @@ export const navigation: INavigation = {
     top: [
         {
             label: 'Home',
-            Icon: IconAllData,
+            Icon: IconHome,
             location: ROUTES.HOME,
         },
         //     {

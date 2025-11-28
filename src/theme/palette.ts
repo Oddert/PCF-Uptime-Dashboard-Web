@@ -27,37 +27,37 @@ import { type Palette, darken, lighten } from '@mui/material';
 
 const palette: Partial<Palette> = {
     primary: {
-        main: '#5E10B1',
-        light: '#8B3FB2',
-        dark: '#3C1053',
-        contrastText: '#FFFFFF',
+        main: '#5E10B1', // Bright Purple
+        light: '#8B3FB2', // Secondary Purple
+        dark: '#3C1053', // Regal Purple
+        contrastText: '#FFFFFF', // White
     },
     secondary: {
-        main: '#5A287D',
-        light: '#8B3FB2',
-        dark: '#3C1053',
-        contrastText: '#FFFFFF',
+        main: '#5A287D', // Champion Purple
+        light: '#8B3FB2', // Secondary Purple
+        dark: '#3C1053', // Regal Purple
+        contrastText: '#FFFFFF', // White
     },
     background: {
         // default: '#333333',
-        default: '#F2EAF9',
-        paper: '#FFFFFF',
+        default: '#F2F2FB', // Lilac
+        paper: '#FFFFFF', // White
     },
     error: {
         contrastText: '#FFFFFF',
-        dark: darken('#CF223F', 1.2),
+        dark: darken('#CF223F', 0.2),
         light: lighten('#CF223F', 0.8),
         main: '#CF223F',
     },
     warning: {
         contrastText: '#FFFFFF',
-        dark: darken('#FCB900', 1.2),
+        dark: darken('#FCB900', 0.2),
         light: lighten('#FCB900', 0.8),
         main: '#FCB900',
     },
     success: {
         contrastText: '#FFFFFF',
-        dark: darken('#429448', 1.2),
+        dark: darken('#429448', 0.2),
         light: lighten('#429448', 0.8),
         main: '#429448',
     },

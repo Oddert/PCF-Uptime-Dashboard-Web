@@ -18,7 +18,7 @@ const InstanceService = Object.freeze({
     allInstances: async () => {
         const response: IStandardResponse & {
             instances: IInstance[];
-        } = await request.get('/instances');
+        } = await request.get('/instance');
         return response;
     },
 });

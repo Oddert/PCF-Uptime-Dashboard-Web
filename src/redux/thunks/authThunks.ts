@@ -161,15 +161,20 @@ export const refreshAuthentication = (callback?: () => void) => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         try {
             const refreshRequestPending = getRefreshTokenPending(getState());
+            console.log({ refreshRequestPending });
 
             if (refreshRequestPending) {
+                console.log('refresh request already pending');
                 return;
             }
 
+            console.log('...set token to pending');
             dispatch(refreshTokenRequestPending());
             const refreshToken = AuthLSService.getRefreshToken();
+            console.log({ refreshToken });
 
             if (!refreshToken) {
+                console.log('user cannot be re-authenticated :(');
                 dispatch(userUnauthenticated());
                 return;
             }

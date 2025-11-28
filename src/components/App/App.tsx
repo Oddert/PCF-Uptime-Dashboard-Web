@@ -9,6 +9,7 @@ import useAuthToken from '../../hooks/useAuthToken';
 import { fetchAllInstances } from '../../redux/thunks/instanceThunks';
 
 import './App.css';
+import AuthBoundary from '../../hocs/AuthBoundary';
 
 /**
  * Core component of the application to be rendered inside relevant contexts and other boilerplate.
@@ -24,7 +25,9 @@ const App = () => {
     const { conditionallyRefreshAuth } = useAuthToken();
 
     useEffect(() => {
+        console.log('App mount');
         const loadAppBaseInfo = () => {
+            console.log('Auth callback load all instances');
             dispatch(fetchAllInstances());
             // dispatch(refreshBudgets(t));
             // dispatch(refreshCards(t));
@@ -35,10 +38,12 @@ const App = () => {
     }, []);
 
     return (
-        <Box className='App'>
-            <CssBaseline enableColorScheme />
-            <RouterProvider router={router} />
-        </Box>
+        <AuthBoundary>
+            <Box className='App'>
+                <CssBaseline enableColorScheme />
+                <RouterProvider router={router} />
+            </Box>
+        </AuthBoundary>
     );
 };
 

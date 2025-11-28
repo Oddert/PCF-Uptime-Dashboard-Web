@@ -69,7 +69,11 @@ const NavLink: FC<IProps> = ({
                         justifyContent: 'center',
                     }}
                 >
-                    <navItem.Icon />
+                    <navItem.Icon
+                        sx={(theme) => ({
+                            color: theme.palette.primary.contrastText,
+                        })}
+                    />
                 </ListItemIcon>
                 {open || permanent ? (
                     <ListItemText primary={navItem.label} />

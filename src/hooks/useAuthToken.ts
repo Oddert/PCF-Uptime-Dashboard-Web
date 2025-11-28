@@ -1,8 +1,7 @@
 import * as jwt from 'jwt-decode';
 
-import { authenticateUser, writeUserDetails } from '../redux/slices/authSlice';
+import { authenticateUser } from '../redux/slices/authSlice';
 import { refreshAuthentication } from '../redux/thunks/authThunks';
-import APIService from '../services/api.service';
 import { AuthLSService } from '../services/authLs.service';
 
 import { useAppDispatch } from './ReduxHookWrappers';
@@ -42,17 +41,17 @@ const useAuthToken = () => {
             }),
         );
 
-        const userDetailsResponse = await APIService.userDetails();
+        // const userDetailsResponse = await APIService.userDetails();
 
-        // if (!userDetailsResponse.user) {
-        //     throw new Error('Issue encountered trying to query user details.');
-        // }
+        // // if (!userDetailsResponse.user) {
+        // //     throw new Error('Issue encountered trying to query user details.');
+        // // }
 
-        dispatch(
-            writeUserDetails({
-                user: userDetailsResponse.user,
-            }),
-        );
+        // dispatch(
+        //     writeUserDetails({
+        //         user: userDetailsResponse.user,
+        //     }),
+        // );
 
         if (callback) {
             callback();
@@ -66,6 +65,7 @@ const useAuthToken = () => {
      * If this is not possible the user auth details are wiped and the user is directed to login again.
      */
     const refreshAuth = (callback?: () => void) => {
+        console.log('refreshAuth()');
         dispatch(refreshAuthentication(callback));
     };
 
@@ -79,6 +79,7 @@ const useAuthToken = () => {
     const conditionallyRefreshAuth = async (callback?: () => void) => {
         const accessToken = AuthLSService.getAccessToken();
         const refreshToken = AuthLSService.getRefreshToken();
+        console.log({ accessToken, refreshToken });
         if (!accessToken || !refreshToken) {
             refreshAuth(callback);
             return;
@@ -86,11 +87,27 @@ const useAuthToken = () => {
         try {
             const accessDecoded = jwt.jwtDecode(accessToken);
             const refreshDecoded = jwt.jwtDecode(refreshToken);
+            console.log({ accessDecoded, refreshDecoded });
 
+            console.log(
+                !accessDecoded.exp,
+                (accessDecoded.exp ?? 0) <=
+                    (new Date().getTime() + timeoutOffset) / 1000,
+                !accessDecoded.exp ||
+                    accessDecoded.exp <=
+                        (new Date().getTime() + timeoutOffset) / 1000,
+            );
+            console.log(
+                accessDecoded.exp,
+                new Date().getTime(),
+                (new Date().getTime() + timeoutOffset) / 1000,
+            );
             if (
                 !accessDecoded.exp ||
-                accessDecoded.exp <= new Date().getTime() + timeoutOffset
+                accessDecoded.exp <=
+                    (new Date().getTime() + timeoutOffset) / 1000
             ) {
+                console.log('token validity check failed');
                 refreshAuth(callback);
                 return;
             }
