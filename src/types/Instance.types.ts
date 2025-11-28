@@ -1,6 +1,6 @@
 export interface IInstance {
     contactInfo: string;
-    createdAt: string;
+    createdAt: number;
     instanceId: string;
     message: string;
     pcfAppName: string;
@@ -13,5 +13,5 @@ export interface IInstance {
     readableName: string;
     status: string;
     tickOverride: number;
-    updatedAt: string;
+    updatedAt: number;
 }

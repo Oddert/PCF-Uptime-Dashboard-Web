@@ -4,12 +4,12 @@ import { RouterProvider } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 
 import router from '../../constants/routerConstants';
+import AuthBoundary from '../../hocs/AuthBoundary';
 import { useAppDispatch } from '../../hooks/ReduxHookWrappers';
 import useAuthToken from '../../hooks/useAuthToken';
 import { fetchAllInstances } from '../../redux/thunks/instanceThunks';
 
-import './App.css';
-import AuthBoundary from '../../hocs/AuthBoundary';
+// import './App.css';
 
 /**
  * Core component of the application to be rendered inside relevant contexts and other boilerplate.

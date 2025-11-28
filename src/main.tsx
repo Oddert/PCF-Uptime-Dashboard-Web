@@ -16,7 +16,7 @@ import theme from './theme/index.ts';
 
 import './common/i18n.ts';
 
-import './index.css';
+// import './index.css';
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById('root')!).render(
