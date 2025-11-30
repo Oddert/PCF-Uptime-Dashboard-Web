@@ -4,7 +4,6 @@ export interface IProps {
     children: ReactNode;
 }
 
-
 export interface FormElements extends HTMLFormControlsCollection {
     username: HTMLInputElement;
     password: HTMLInputElement;

@@ -1,28 +1,36 @@
-import { Fragment, type FC, type FormEvent } from 'react';
+import { type FC, type FormEvent, Fragment } from 'react';
+
+import {
+    Box,
+    Button,
+    DialogContent,
+    DialogTitle,
+    TextField,
+    Typography,
+} from '@mui/material';
 
 import type { IProps } from './Signup.types';
-import { Box, Button, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
-import { useAppDispatch } from '../../../../hooks/ReduxHookWrappers';
-import {  registerUser } from '../../../../redux/thunks/authThunks';
 import type { LoginFormContent } from '../../AuthBoundary.types';
 
+import { useAppDispatch } from '../../../../hooks/ReduxHookWrappers';
+import { registerUser } from '../../../../redux/thunks/authThunks';
 
-const Signup: FC<IProps> = ({ setIsSignup}) => {
-        const dispatch = useAppDispatch();
-    
-     const handleSubmit = (event: FormEvent<LoginFormContent>) => {
-            event.preventDefault();
-            dispatch(
-                registerUser(
-                    event.currentTarget.username.value as string,
-                    event.currentTarget.password.value as string,
-                ),
-            );
-        };
+const Signup: FC<IProps> = ({ setIsSignup }) => {
+    const dispatch = useAppDispatch();
+
+    const handleSubmit = (event: FormEvent<LoginFormContent>) => {
+        event.preventDefault();
+        dispatch(
+            registerUser(
+                event.currentTarget.username.value as string,
+                event.currentTarget.password.value as string,
+            ),
+        );
+    };
 
     return (
-    <Fragment>
-        <DialogTitle textAlign='center'>Register an account</DialogTitle>
+        <Fragment>
+            <DialogTitle textAlign='center'>Register an account</DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit}>
                     <Box
@@ -44,11 +52,18 @@ const Signup: FC<IProps> = ({ setIsSignup}) => {
                         </Button>
                     </Box>
                 </form>
-                <Typography textAlign='center' sx={{mt: 3}}>
-                    Already a user? <Button onClick={() => setIsSignup(false)}>Log in</Button>
+                <Typography textAlign='center' sx={{ mt: 3 }}>
+                    Already a user?{' '}
+                    <Button
+                        onClick={() => {
+                            setIsSignup(false);
+                        }}
+                    >
+                        Log in
+                    </Button>
                 </Typography>
             </DialogContent>
-    </Fragment>
+        </Fragment>
     );
 };
 

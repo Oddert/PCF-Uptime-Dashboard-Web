@@ -46,10 +46,7 @@ const APIService = Object.freeze({
      * @param password The entered password.
      * @returns The access and refresh tokens or a failed register attempt.
      */
-    registerUser: async (
-        username: string,
-        password: string,
-    ) => {
+    registerUser: async (username: string, password: string) => {
         const response: IStandardResponse & {
             accessToken: string;
             refreshToken: string;

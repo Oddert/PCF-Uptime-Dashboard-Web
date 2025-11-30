@@ -109,16 +109,9 @@ export const loginUser =
  * @param password The user-entered password.
  */
 export const registerUser =
-    (
-        username: string,
-        password: string,
-    ) =>
-    async (dispatch: AppDispatch) => {
+    (username: string, password: string) => async (dispatch: AppDispatch) => {
         try {
-            const response = await APIService.registerUser(
-                username,
-                password,
-            );
+            const response = await APIService.registerUser(username, password);
 
             if (response.status === 404) {
                 dispatch(setIncorrectDetails());
