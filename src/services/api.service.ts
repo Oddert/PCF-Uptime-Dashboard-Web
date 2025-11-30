@@ -49,8 +49,6 @@ const APIService = Object.freeze({
     registerUser: async (
         username: string,
         password: string,
-        displayName: string,
-        languages: string,
     ) => {
         const response: IStandardResponse & {
             accessToken: string;
@@ -59,8 +57,6 @@ const APIService = Object.freeze({
         } = await request.post('/auth/signup', {
             username,
             password,
-            displayName,
-            languages,
         });
         return response;
     },

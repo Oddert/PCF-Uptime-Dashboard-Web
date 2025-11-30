@@ -112,16 +112,12 @@ export const registerUser =
     (
         username: string,
         password: string,
-        displayName: string,
-        languages: string,
     ) =>
     async (dispatch: AppDispatch) => {
         try {
             const response = await APIService.registerUser(
                 username,
                 password,
-                displayName,
-                languages,
             );
 
             if (response.status === 404) {
