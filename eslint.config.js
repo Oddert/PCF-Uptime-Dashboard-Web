@@ -193,7 +193,7 @@ export default defineConfig([
                 'error',
                 {
                     disableLanguages: ['html', 'scss'],
-                    endOfLine: 'lf',
+                    endOfLine: 'crlf',
                     jsxSingleQuote: true,
                     printWidth: 80,
                     singleQuote: true,
