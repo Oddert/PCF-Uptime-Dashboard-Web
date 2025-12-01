@@ -1,11 +1,4 @@
-import {
-    Box,
-    Container,
-    List,
-    ListItem,
-    Paper,
-    Typography,
-} from '@mui/material';
+import { Box, List, ListItem, Paper, Typography } from '@mui/material';
 
 import { useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
