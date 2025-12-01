@@ -1,6 +1,8 @@
-import { type FC, type FormEvent, Fragment } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { type FC, type FormEvent, Fragment, useState } from 'react';
 
 import {
+    Autocomplete,
     Box,
     Button,
     DialogContent,
@@ -12,10 +14,15 @@ import {
 import type { IProps } from './Signup.types';
 import type { LoginFormContent } from '../../AuthBoundary.types';
 
+import { roles } from '../../../../constants/appConstants';
 import { useAppDispatch } from '../../../../hooks/ReduxHookWrappers';
 import { registerUser } from '../../../../redux/thunks/authThunks';
 
 const Signup: FC<IProps> = ({ setIsSignup }) => {
+    const [chosenRoles, setChosenRoles] = useState<
+        { id: string; readableName: string }[]
+    >([]);
+
     const dispatch = useAppDispatch();
 
     const handleSubmit = (event: FormEvent<LoginFormContent>) => {
@@ -24,6 +31,7 @@ const Signup: FC<IProps> = ({ setIsSignup }) => {
             registerUser(
                 event.currentTarget.username.value as string,
                 event.currentTarget.password.value as string,
+                chosenRoles.map((role) => role.id),
             ),
         );
     };
@@ -47,7 +55,18 @@ const Signup: FC<IProps> = ({ setIsSignup }) => {
                             name='password'
                             type='password'
                         />
-                        <Button type='submit' variant='contained'>
+                        <Autocomplete
+                            getOptionLabel={(opt) => opt.readableName}
+                            getOptionKey={(opt) => opt.id}
+                            multiple
+                            onChange={(_e, value) => {
+                                setChosenRoles(value);
+                            }}
+                            options={roles}
+                            renderInput={(props) => <TextField {...props} />}
+                            value={chosenRoles}
+                        />
+                        <Button name='roles' type='submit' variant='contained'>
                             Signup
                         </Button>
                     </Box>

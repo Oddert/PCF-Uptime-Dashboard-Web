@@ -18,6 +18,7 @@ import { listAllInstances } from '../../redux/selectors/instanceSelectors';
 const Home = () => {
     const firstName = useAppSelector(getUserFirstName);
     const instances = useAppSelector(listAllInstances);
+
     return (
         //  <ResponsiveContainer>
         <Box

@@ -39,6 +39,17 @@ export const instanceSlice = createSlice({
             state.loading = true;
             state.error = false;
         },
+        updateInstance(
+            state,
+            { payload }: PayloadAction<{ instance: IInstance }>,
+        ) {
+            state.instances = state.instances.map((instance) => {
+                if (instance.instanceId === payload.instance.instanceId) {
+                    return payload.instance;
+                }
+                return instance;
+            });
+        },
         writeAllInstances(
             state,
             {
@@ -58,7 +69,11 @@ export const instanceSlice = createSlice({
     },
 });
 
-export const { instancesError, instancesLoading, writeAllInstances } =
-    instanceSlice.actions;
+export const {
+    instancesError,
+    instancesLoading,
+    updateInstance,
+    writeAllInstances,
+} = instanceSlice.actions;
 
 export default instanceSlice.reducer;

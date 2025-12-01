@@ -11,7 +11,7 @@ import type { IStandardResponse } from '../types/Request.types';
  */
 export const getServerURL = (): string => {
     // Temporary hard-coded value. Swap with selection logic if / when hosting method established.
-    return 'http://localhost:8080/api/v0';
+    return 'http://localhost:8081/api/v0';
 };
 
 export type TRetryFunc<IApiCaller, IResponse> = (

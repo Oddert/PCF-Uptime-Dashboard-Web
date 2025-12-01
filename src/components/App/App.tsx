@@ -7,7 +7,7 @@ import router from '../../constants/routerConstants';
 import AuthBoundary from '../../hocs/AuthBoundary';
 import { useAppDispatch } from '../../hooks/ReduxHookWrappers';
 import useAuthToken from '../../hooks/useAuthToken';
-import { fetchAllInstances } from '../../redux/thunks/instanceThunks';
+import { initialAppLoad } from '../../redux/thunks/genericThunks';
 
 // import './App.css';
 
@@ -25,15 +25,10 @@ const App = () => {
     const { conditionallyRefreshAuth } = useAuthToken();
 
     useEffect(() => {
-        console.log('App mount');
-        const loadAppBaseInfo = () => {
-            console.log('Auth callback load all instances');
-            dispatch(fetchAllInstances());
-            // dispatch(refreshBudgets(t));
-            // dispatch(refreshCards(t));
-            // dispatch(refreshScenarios(t));
+        conditionallyRefreshAuth(initialAppLoad(dispatch));
+        return () => {
+            dispatch({ type: 'socket/disconnect' });
         };
-        conditionallyRefreshAuth(loadAppBaseInfo);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

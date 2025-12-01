@@ -15,3 +15,8 @@ export interface IInstance {
     tickOverride: number;
     updatedAt: number;
 }
+
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+export interface IInstanceExtended extends IInstance {
+    [key: string]: number | string | null | undefined;
+}

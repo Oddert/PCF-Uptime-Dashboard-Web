@@ -24,6 +24,7 @@ export const createBlankRequest = () => {
         headers: {
             'Content-Type': 'application/json',
         },
+        withCredentials: true,
     });
 
     requestClient.interceptors.request.use((config) => {

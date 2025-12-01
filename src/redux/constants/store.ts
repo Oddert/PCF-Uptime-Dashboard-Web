@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { Socket } from '../../utils/socketManager';
+import { socketMiddleware } from '../middleware/socketMiddleware';
 import authReducer from '../slices/authSlice';
 import errorReducer from '../slices/errorSlice';
 import instanceReducer from '../slices/instanceSlice';
@@ -10,7 +12,8 @@ const store = configureStore({
         error: errorReducer,
         instance: instanceReducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(socketMiddleware(new Socket())),
 });
 
 export default store;

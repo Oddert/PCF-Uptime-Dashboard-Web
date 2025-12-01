@@ -18,6 +18,7 @@ import {
 } from '../slices/authSlice';
 
 import { intakeError } from './errorThunks';
+import { initialAppLoad } from './genericThunks';
 
 /**
  * Lower-order thunk to handle the result of a successful login.
@@ -89,7 +90,9 @@ export const loginUser =
             if (response.status === 404) {
                 dispatch(setIncorrectDetails());
             } else {
-                dispatch(handleAuthResponse(response));
+                dispatch(
+                    handleAuthResponse(response, initialAppLoad(dispatch)),
+                );
             }
         } catch (error: unknown) {
             // @ts-expect-error unknown error
@@ -109,14 +112,21 @@ export const loginUser =
  * @param password The user-entered password.
  */
 export const registerUser =
-    (username: string, password: string) => async (dispatch: AppDispatch) => {
+    (username: string, password: string, roles: string[]) =>
+    async (dispatch: AppDispatch) => {
         try {
-            const response = await APIService.registerUser(username, password);
+            const response = await APIService.registerUser(
+                username,
+                password,
+                roles,
+            );
 
             if (response.status === 404) {
                 dispatch(setIncorrectDetails());
             } else {
-                dispatch(handleAuthResponse(response));
+                dispatch(
+                    handleAuthResponse(response, initialAppLoad(dispatch)),
+                );
             }
         } catch (error: unknown) {
             // @ts-expect-error unknown error
@@ -150,20 +160,20 @@ export const refreshAuthentication = (callback?: () => void) => {
     return async (dispatch: AppDispatch, getState: () => RootState) => {
         try {
             const refreshRequestPending = getRefreshTokenPending(getState());
-            console.log({ refreshRequestPending });
+            // console.log({ refreshRequestPending });
 
             if (refreshRequestPending) {
-                console.log('refresh request already pending');
+                // console.log('refresh request already pending');
                 return;
             }
 
-            console.log('...set token to pending');
+            // console.log('...set token to pending');
             dispatch(refreshTokenRequestPending());
             const refreshToken = AuthLSService.getRefreshToken();
-            console.log({ refreshToken });
+            // console.log({ refreshToken });
 
             if (!refreshToken) {
-                console.log('user cannot be re-authenticated :(');
+                // console.log('user cannot be re-authenticated :(');
                 dispatch(userUnauthenticated());
                 return;
             }

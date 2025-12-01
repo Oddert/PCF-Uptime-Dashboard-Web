@@ -37,16 +37,21 @@ const APIService = Object.freeze({
             accessToken: string;
             refreshToken: string;
             user: IUser;
-        } = await request.post('/auth/refresh-token', { refreshToken });
+        } = await request.post('/auth/token-refresh', { refreshToken });
         return response;
     },
     /**
      * Attempts to register a new user account.
      * @param username The entered username.
      * @param password The entered password.
+     * @param areas List of roles to assign to the user.
      * @returns The access and refresh tokens or a failed register attempt.
      */
-    registerUser: async (username: string, password: string) => {
+    registerUser: async (
+        username: string,
+        password: string,
+        areas: string[],
+    ) => {
         const response: IStandardResponse & {
             accessToken: string;
             refreshToken: string;
@@ -54,6 +59,7 @@ const APIService = Object.freeze({
         } = await request.post('/auth/signup', {
             username,
             password,
+            areas,
         });
         return response;
     },
