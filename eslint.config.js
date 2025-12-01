@@ -11,8 +11,6 @@ import eslintPluginSecurity from 'eslint-plugin-security'
 import eslintPluginImport from 'eslint-plugin-import'
 import tseslint from 'typescript-eslint'
 
-console.log(import.meta.dirname);
-
 export default defineConfig([
     // globalIgnores(['dist']),
     // {
