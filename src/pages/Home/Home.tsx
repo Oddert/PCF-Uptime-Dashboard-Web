@@ -1,9 +1,10 @@
 import { Box, List, ListItem, Typography } from '@mui/material';
 
 import InstanceCard from '../../components/InstanceCard';
-import { useAppSelector } from '../../hooks/ReduxHookWrappers';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
 import { listAllInstances } from '../../redux/selectors/instanceSelectors';
+import { useEffect } from 'react';
 
 // import './Home.css';
 // import ResponsiveContainer from '../../hocs/ResponsiveContainer';
@@ -17,8 +18,18 @@ import { listAllInstances } from '../../redux/selectors/instanceSelectors';
  * @subcategory Home
  */
 const Home = () => {
+    const dispatch = useAppDispatch()
+
     const firstName = useAppSelector(getUserFirstName);
     const instances = useAppSelector(listAllInstances);
+
+    useEffect(() => {
+        dispatch({ type: 'socket/connect' });
+        return () => {
+            dispatch({ type: 'socket/disconnect' });
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         //  <ResponsiveContainer>
