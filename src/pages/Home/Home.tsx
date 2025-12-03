@@ -1,5 +1,6 @@
-import { Box, List, ListItem, Paper, Typography } from '@mui/material';
+import { Box, List, ListItem, Typography } from '@mui/material';
 
+import InstanceCard from '../../components/InstanceCard';
 import { useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
 import { listAllInstances } from '../../redux/selectors/instanceSelectors';
@@ -53,25 +54,7 @@ const Home = () => {
                             key={instance.instanceId}
                             sx={{ display: 'block' }}
                         >
-                            <Paper sx={{ px: 4, py: 1 }}>
-                                <Typography variant='subtitle1'>
-                                    {instance.readableName}
-                                </Typography>
-                                {instance.readableName !==
-                                instance.pcfAppName ? (
-                                    <Typography variant='subtitle2'>
-                                        {instance.pcfAppName}
-                                    </Typography>
-                                ) : null}
-                                <Typography variant='subtitle2'>
-                                    {instance.status}
-                                </Typography>
-                                <Typography variant='body2'>
-                                    {new Date(
-                                        instance.updatedAt,
-                                    ).toLocaleString('en-GB')}
-                                </Typography>
-                            </Paper>
+                            <InstanceCard instance={instance} />
                         </ListItem>
                     ))}
                 </List>
