@@ -30,6 +30,7 @@ import Layout from '../components/Layout';
 // import EditCard from '../pages/EditCard';
 // import EditScenario from '../pages/EditScenario';
 import Home from '../pages/Home';
+import SimPCF from '../pages/SimPCF';
 // import Login from '../pages/Login';
 // import ManageBudgets from '../pages/ManageBudgets';
 // import ManageCards from '../pages/ManageCards';
@@ -63,6 +64,7 @@ export interface INavigation {
  */
 export const ROUTES = Object.freeze({
     HOME: '/',
+    SIM_PCF: '/simulate',
     // ALL_DATA: '/all-data',
     // BUDGET_BREAKDOWN: '/budget-breakdown',
     // BUDGET_OVERVIEW: '/budget-overview',
@@ -122,6 +124,14 @@ const router = createBrowserRouter([
             </Layout>
         ),
     },
+    {
+        path: ROUTES.SIM_PCF,
+        element: (
+            <Layout>
+                <SimPCF />
+            </Layout>
+        ),
+    },
 ]);
 
 /**
@@ -136,6 +146,11 @@ export const navigation: INavigation = {
             label: 'Home',
             Icon: IconHome,
             location: ROUTES.HOME,
+        },
+        {
+            label: 'Simulate PCF',
+            Icon: IconHome,
+            location: ROUTES.SIM_PCF,
         },
         //     {
         //         label: 'Transactions',
