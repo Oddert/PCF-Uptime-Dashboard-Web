@@ -47,7 +47,7 @@ export const instanceSlice = createSlice({
                 if (instance.instanceId === payload.instance.instanceId) {
                     return payload.instance;
                 }
-                return instance;
+                return { ...instance, received: Date.now() };
             });
         },
         updateMultipleInstances(
@@ -66,7 +66,7 @@ export const instanceSlice = createSlice({
                 if (instance.instanceId in instancesById) {
                     return instancesById[instance.instanceId];
                 }
-                return instance;
+                return { ...instance, received: Date.now() };
             });
         },
         writeAllInstances(
@@ -79,7 +79,10 @@ export const instanceSlice = createSlice({
             }>,
         ) {
             state.collections = payload.collections;
-            state.instances = payload.instances;
+            state.instances = payload.instances.map((instance) => ({
+                ...instance,
+                received: Date.now(),
+            }));
             state.loaded = true;
             state.loading = false;
             state.error = false;

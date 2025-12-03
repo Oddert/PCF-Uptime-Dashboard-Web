@@ -11,6 +11,7 @@ export interface IInstance {
     pcfRam: number;
     pcfSpaceId: string;
     readableName: string;
+    received?: number;
     status: string;
     tickOverride: number;
     updatedAt: number;
