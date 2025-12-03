@@ -5,7 +5,7 @@ import { Paper, type Theme, Typography } from '@mui/material';
 import type { IProps } from './InstanceCard.types';
 import type { IInstance } from '../../types/Instance.types';
 
-const getRag = (theme: Theme, status: IInstance['status']) => { 
+const getRag = (theme: Theme, status: IInstance['status']) => {
     switch (status) {
         case 'RUNNING':
             return theme.palette.success.main;

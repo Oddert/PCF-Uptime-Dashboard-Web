@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
+
 import { Box, List, ListItem, Typography } from '@mui/material';
 
 import InstanceCard from '../../components/InstanceCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { getUserFirstName } from '../../redux/selectors/authSelectors';
 import { listAllInstances } from '../../redux/selectors/instanceSelectors';
-import { useEffect } from 'react';
 
 // import './Home.css';
 // import ResponsiveContainer from '../../hocs/ResponsiveContainer';
@@ -18,7 +19,7 @@ import { useEffect } from 'react';
  * @subcategory Home
  */
 const Home = () => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
 
     const firstName = useAppSelector(getUserFirstName);
     const instances = useAppSelector(listAllInstances);

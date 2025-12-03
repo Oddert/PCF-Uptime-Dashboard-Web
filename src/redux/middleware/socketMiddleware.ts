@@ -26,6 +26,7 @@ export const socketMiddleware: TSocketMiddleware =
                         );
                         socket.on('open', () => {});
                         socket.on('message', (data: MessageEvent<string>) => {
+                            console.log(data);
                             // @ts-expect-error Unexpected payload action
                             params.dispatch(updateFromWS(data.data));
                         });

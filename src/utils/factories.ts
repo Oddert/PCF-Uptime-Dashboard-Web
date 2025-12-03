@@ -13,6 +13,7 @@ export const createInstance = (instance?: Partial<IInstance>): IInstance => ({
     pcfRam: 0,
     pcfSpaceId: '',
     readableName: '',
+    received: Date.now(),
     status: '',
     tickOverride: 0,
     updatedAt: 0,
