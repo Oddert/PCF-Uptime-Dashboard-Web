@@ -46,6 +46,7 @@ const Signup: FC<IProps> = ({ setIsSignup }) => {
                             display: 'flex',
                             flexDirection: 'column',
                             gridGap: '16px',
+                            mt: 2,
                         }}
                     >
                         <TextField fullWidth label='RACF ID' name='username' />
