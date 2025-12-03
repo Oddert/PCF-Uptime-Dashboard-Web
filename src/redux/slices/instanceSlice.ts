@@ -50,6 +50,25 @@ export const instanceSlice = createSlice({
                 return instance;
             });
         },
+        updateMultipleInstances(
+            state,
+            { payload }: PayloadAction<{ instances: IInstance[] }>,
+        ) {
+            const instancesById = payload.instances.reduce(
+                (acc: Record<string, IInstance>, instance) => {
+                    acc[instance.instanceId] = instance;
+                    return acc;
+                },
+                {},
+            );
+
+            state.instances = state.instances.map((instance) => {
+                if (instance.instanceId in instancesById) {
+                    return instancesById[instance.instanceId];
+                }
+                return instance;
+            });
+        },
         writeAllInstances(
             state,
             {
@@ -73,6 +92,7 @@ export const {
     instancesError,
     instancesLoading,
     updateInstance,
+    updateMultipleInstances,
     writeAllInstances,
 } = instanceSlice.actions;
 

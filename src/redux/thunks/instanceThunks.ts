@@ -6,7 +6,7 @@ import { createInstance } from '../../utils/factories';
 import {
     instancesError,
     instancesLoading,
-    updateInstance,
+    updateMultipleInstances,
     writeAllInstances,
 } from '../slices/instanceSlice';
 
@@ -39,26 +39,41 @@ export const fetchAllInstances = () => async (dispatch: AppDispatch) => {
  * Updates a single Instance from a JSON serialised WebSocket response.
  * @category Redux
  * @subcategory Thunks
- * @param instanceJson The Instance in JSON string format.
+ * @param instanceJson The list of Instances in JSON string format. Must resolve to an array of objects.
  */
 export const updateFromWS =
     (instanceJson: string) => async (dispatch: AppDispatch) => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
             const obj: any = JSON.parse(instanceJson);
-            const instance: IInstance = { ...createInstance() };
-            if (typeof obj === 'object') {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                const keys = Object.keys(obj);
-                for (const key of keys) {
-                    if (key in instance) {
-                        // @ts-expect-error idk how to resolve this one
-                        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-                        instance[key] = obj[key];
+            const instances: IInstance[] = [];
+            if (Array.isArray(obj)) {
+                for (const incomingInstance of obj) {
+                    const instance: IInstance = { ...createInstance() };
+                    if (typeof incomingInstance === 'object') {
+                        const keys = Object.keys(obj);
+                        for (const key of keys) {
+                            if (key in instance) {
+                                // @ts-expect-error idk how to resolve this one
+                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                                instance[key] = obj[key];
+                            }
+                        }
+                    } else {
+                        throw TypeError(
+                            'Array item from the JSON websocket response is not a valid Instance object.',
+                            { cause: JSON.stringify(incomingInstance) },
+                        );
                     }
+                    instances.push(instance);
                 }
+            } else {
+                throw TypeError(
+                    'JSON response from the websocket connection is not a valid Array.',
+                    { cause: instanceJson },
+                );
             }
-            dispatch(updateInstance({ instance }));
+            dispatch(updateMultipleInstances({ instances }));
         } catch (error) {
             dispatch(intakeError(error));
         }
