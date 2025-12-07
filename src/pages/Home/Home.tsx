@@ -4,7 +4,6 @@ import { Box, List, ListItem, Typography } from '@mui/material';
 
 import InstanceCard from '../../components/InstanceCard';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
-import { getUserFirstName } from '../../redux/selectors/authSelectors';
 import { listAllInstances } from '../../redux/selectors/instanceSelectors';
 
 // import './Home.css';
@@ -21,7 +20,6 @@ import { listAllInstances } from '../../redux/selectors/instanceSelectors';
 const Home = () => {
     const dispatch = useAppDispatch();
 
-    const firstName = useAppSelector(getUserFirstName);
     const instances = useAppSelector(listAllInstances);
 
     useEffect(() => {
@@ -38,8 +36,8 @@ const Home = () => {
             sx={{
                 height: '200vh',
                 gridGap: '20px',
-                //  border: '1px dashed tomato',
-                width: '90vw',
+                border: '1px dashed tomato',
+                width: '100%',
                 mx: 'auto',
                 // gridAutoRows: '400px',
             }}
@@ -48,17 +46,19 @@ const Home = () => {
                 sx={{ gridColumn: '1/-1', textAlign: 'left', mb: 4 }}
                 variant='h2'
             >
-                Welcome {firstName ?? 'whoever you are'}
+                Welcome
             </Typography>
             {instances.length ? (
                 <List
                     sx={{
                         width: '100%',
-                        // border: '1px dashed steelblue',
+                        border: '1px dashed steelblue',
                         display: 'grid',
                         // gridAutoRows: 'minmax(100px, auto)',
                         gridTemplateColumns:
-                            'repeat(auto-fit, minmax(100px, 450px))',
+                            'repeat(auto-fit, minmax(100px, 400px))',
+                        margin: '0 auto',
+                        justifyContent: 'center',
                     }}
                 >
                     {instances.map((instance) => (
