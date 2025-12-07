@@ -1,9 +1,11 @@
 import type { FC } from 'react';
 
-import { Paper, type Theme, Typography } from '@mui/material';
+import { Paper, type Theme, Tooltip, Typography } from '@mui/material';
 
 import type { IProps } from './InstanceCard.types';
 import type { IInstance } from '../../types/Instance.types';
+
+import { displayTimeFrom } from '../../utils/timeUtils';
 
 const getRag = (theme: Theme, status: IInstance['status']) => {
     switch (status) {
@@ -32,8 +34,18 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
             ) : null}
             <Typography variant='subtitle2'>{instance.status}</Typography>
             <Typography variant='body2'>
-                {new Date(instance.updatedAt).toLocaleString('en-GB')}
+                Last change:{' '}
+                {new Date(instance.updatedAt * 1000).toLocaleString('en-GB')}
             </Typography>
+            {instance.received ? (
+                <Tooltip
+                    title={new Date(instance.received).toLocaleString('en-GB')}
+                >
+                    <Typography variant='body2'>
+                        Updated: {displayTimeFrom(instance.received)}
+                    </Typography>
+                </Tooltip>
+            ) : null}
         </Paper>
     );
 };
