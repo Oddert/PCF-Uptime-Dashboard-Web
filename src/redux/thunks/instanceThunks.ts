@@ -51,14 +51,15 @@ export const updateFromWS =
                 for (const incomingInstance of obj) {
                     const instance: IInstance = { ...createInstance() };
                     if (typeof incomingInstance === 'object') {
-                        const keys = Object.keys(obj);
-                        for (const key of keys) {
-                            if (key in instance) {
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                        const keys = Object.keys(incomingInstance);
+                        keys.forEach((key) => {
+                            if (key in incomingInstance) {
                                 // @ts-expect-error idk how to resolve this one
-                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                                instance[key] = obj[key];
+                                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+                                instance[key] = incomingInstance[key];
                             }
-                        }
+                        });
                     } else {
                         throw TypeError(
                             'Array item from the JSON websocket response is not a valid Instance object.',

@@ -56,7 +56,10 @@ export const instanceSlice = createSlice({
         ) {
             const instancesById = payload.instances.reduce(
                 (acc: Record<string, IInstance>, instance) => {
-                    acc[instance.instanceId] = instance;
+                    acc[instance.instanceId] = {
+                        ...instance,
+                        received: Date.now(),
+                    };
                     return acc;
                 },
                 {},
@@ -66,7 +69,7 @@ export const instanceSlice = createSlice({
                 if (instance.instanceId in instancesById) {
                     return instancesById[instance.instanceId];
                 }
-                return { ...instance, received: Date.now() };
+                return instance;
             });
         },
         writeAllInstances(
