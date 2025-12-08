@@ -32,7 +32,7 @@ const NavLink: FC<IProps> = ({
 
     const selected = useMemo(() => {
         // eslint-disable-next-line security/detect-non-literal-regexp
-        const re = new RegExp(navItem.location, 'gi');
+        const re = new RegExp(`${navItem.location}$`, 'gi');
         const test = re.test(appLocation.pathname);
         return test;
     }, [navItem, appLocation]);
@@ -71,7 +71,7 @@ const NavLink: FC<IProps> = ({
                 >
                     <navItem.Icon
                         sx={(theme) => ({
-                            color: theme.palette.primary.contrastText,
+                            color: selected ? theme.palette.primary.contrastText : theme.palette.primary.main,
                         })}
                     />
                 </ListItemIcon>
