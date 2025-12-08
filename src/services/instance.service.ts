@@ -21,6 +21,29 @@ const InstanceService = Object.freeze({
         } = await request.get('/instance');
         return response;
     },
+
+    /**
+     * Requests an individual instance by PCF GUID.
+     * @param pcfGuid The PCF ID being requested.
+     * @returns The instance.
+     */
+    instanceByPcfGuid: async (pcfGuid: string) => {
+        const response: IStandardResponse & {
+            instance: IInstance;
+        } = await request.get(`/instance/pcf-id/${pcfGuid}`);
+        return response;
+    },
+
+    /**
+     * Gets a mapping of all PCF organisation IDs to readable names.
+     * @returns
+     */
+    orgMapping: async () => {
+        const response: IStandardResponse & {
+            orgNames: Record<string, string>;
+        } = await request.get('/instance/org-names');
+        return response;
+    },
 });
 
 export default InstanceService;
