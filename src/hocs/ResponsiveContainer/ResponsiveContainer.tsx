@@ -25,7 +25,6 @@ const ResponsiveContainer: FC<IProps> = ({ children }) => {
                 minHeight: `calc(100vh)`,
                 padding: '0 16px 0',
                 transition: '.2s linear',
-                border: '1px dashed tomato',
                 [theme.breakpoints.up('sm')]: {
                     maxWidth: contentWidth,
                 },

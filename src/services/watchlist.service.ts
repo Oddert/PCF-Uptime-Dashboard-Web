@@ -43,6 +43,27 @@ const WatchlistService = Object.freeze({
     },
 
     /**
+     * Deleted as single Watchlist.
+     */
+    deletetWatchlist: async (watchlistId: string) => {
+        const response: IStandardResponse = await request.delete(
+            `/watchlist/${watchlistId}`,
+        );
+        return response;
+    },
+
+    /**
+     * Queries a Watchlist by ID.
+     * @param watchlistId The ID of the watchlist being requested.
+     */
+    getById: async (watchlistId: string) => {
+        const response: IStandardResponse & {
+            watchlist: IWatchlist;
+        } = await request.get(`/watchlist/${watchlistId}`);
+        return response;
+    },
+
+    /**
      * Updates a Watchlist by ID.
      * @param watchlistId The ID to attempt to update.
      * @param watchlist The watchlist parameters to update.

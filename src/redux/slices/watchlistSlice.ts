@@ -29,6 +29,29 @@ export const watchlistSlice = createSlice({
     name: 'watchlist',
     initialState,
     reducers: {
+        createWatchlist(
+            state,
+            { payload }: PayloadAction<{ watchlist: IWatchlist }>,
+        ) {
+            state.watchlists.push(payload.watchlist);
+            state.watchlists = state.watchlists.sort((a, b) =>
+                String(a.title) < String(b.title) ? 1 : -1,
+            );
+            if (payload.watchlist.isDefault) {
+                state.defaultWatchlist = payload.watchlist;
+            }
+        },
+        deleteWatchlist(
+            state,
+            { payload }: PayloadAction<{ watchlistId: string }>,
+        ) {
+            state.watchlists = state.watchlists.filter(
+                (watchlist) => watchlist.watchlistId !== payload.watchlistId,
+            );
+            if (state.defaultWatchlist?.watchlistId === payload.watchlistId) {
+                state.defaultWatchlist = null;
+            }
+        },
         updateWatchlist(
             state,
             { payload }: PayloadAction<{ watchlist: IWatchlist }>,
@@ -69,6 +92,8 @@ export const watchlistSlice = createSlice({
 });
 
 export const {
+    createWatchlist,
+    deleteWatchlist,
     updateWatchlist,
     watchlistsError,
     watchlistsLoading,

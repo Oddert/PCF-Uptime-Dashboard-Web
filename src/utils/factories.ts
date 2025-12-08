@@ -1,4 +1,5 @@
 import type { IInstance } from '../types/Instance.types';
+import type { IWatchlist } from '../types/Watchlist.types';
 
 export const createInstance = (instance?: Partial<IInstance>): IInstance => ({
     contactInfo: '',
@@ -18,4 +19,16 @@ export const createInstance = (instance?: Partial<IInstance>): IInstance => ({
     tickOverride: 0,
     updatedAt: 0,
     ...instance,
+});
+
+export const createWatchlist = (
+    watchlist?: Partial<IWatchlist>,
+): IWatchlist => ({
+    description: '',
+    instances: [],
+    isDefault: false,
+    title: '',
+    racf: '',
+    watchlistId: '',
+    ...watchlist,
 });

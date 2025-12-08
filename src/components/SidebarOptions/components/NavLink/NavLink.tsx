@@ -71,7 +71,9 @@ const NavLink: FC<IProps> = ({
                 >
                     <navItem.Icon
                         sx={(theme) => ({
-                            color: selected ? theme.palette.primary.contrastText : theme.palette.primary.main,
+                            color: selected
+                                ? theme.palette.primary.contrastText
+                                : theme.palette.primary.main,
                         })}
                     />
                 </ListItemIcon>

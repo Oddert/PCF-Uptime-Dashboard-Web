@@ -1,47 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import {
+    CollectionsBookmark as IconWatchlist,
     DisplaySettings as IconAllInstances,
-    // AutoAwesomeMotion as IconManageBudget,
-    // CandlestickChart as IconBudgetOverview,
-    // Category as IconCategory,
-    // DonutSmall as IconBudgetBreakdown,
-    // Logout as IconLogout,
-    // Payments as IconManageCards,
-    // Person as IconUser,
-    // Receipt as IconTransaction,
-    // // ManageAccounts as IconProfile,
-    // //  Tune as IconManageBudget,
-    // //  DeveloperBoard as IconScenarioEdit,
-    // ReceiptLong as IconTransactions,
-    // Settings as IconProfile,
-    // StackedBarChart as IconBudget,
-    // WaterfallChart as IconAllData,
     Home as IconHome,
+    Settings as IconPcfSim,
 } from '@mui/icons-material';
 import type { SvgIconTypeMap } from '@mui/material';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
 
 import Layout from '../components/Layout';
-// import AllData from '../pages/AllData';
-// import BudgetBreakdown from '../pages/BudgetBreakdown';
-// import BudgetOverview from '../pages/BudgetOverview';
-// import Categories from '../pages/Categories/';
-// import EditBudget from '../pages/EditBudget';
-// import EditCard from '../pages/EditCard';
-// import EditScenario from '../pages/EditScenario';
 import AllInstances from '../pages/AllInstances';
+import EditWatchlist from '../pages/EditWatchlist';
 import Home from '../pages/Home';
 import SimPCF from '../pages/SimPCF';
-// import Login from '../pages/Login';
-// import ManageBudgets from '../pages/ManageBudgets';
-// import ManageCards from '../pages/ManageCards';
-// import ManageScenarios from '../pages/ManageScenarios';
-// import Profile from '../pages/Profile';
-// import Appearance from '../pages/Profile/Tabs/Appearance';
-// import Language from '../pages/Profile/Tabs/Language';
-// import Security from '../pages/Profile/Tabs/Security';
-// import Transactions from '../pages/Transactions/';
+import Watchlists from '../pages/Watchlists';
 
 export interface INavigationOption {
     label: string;
@@ -66,25 +39,11 @@ export interface INavigation {
  */
 export const ROUTES = Object.freeze({
     ALL_INSTANCES: '/all-instances',
+    CREATE_WATCHLIST: '/edit-watchlist',
+    EDIT_WATCHLIST: '/edit-watchlist/:watchlistId',
     HOME: '/',
     SIM_PCF: '/simulate',
-    // ALL_DATA: '/all-data',
-    // BUDGET_BREAKDOWN: '/budget-breakdown',
-    // BUDGET_OVERVIEW: '/budget-overview',
-    // CATEGORIES: '/categories',
-    // CREATE_BUDGET: '/create-budget',
-    // CREATE_CARD: '/create-card',
-    // CREATE_SCENARIO: '/create-scenario',
-    // EDIT_BUDGET: '/edit-budget',
-    // EDIT_CARD: '/edit-card',
-    // EDIT_SCENARIO: '/edit-scenario',
-    // LOGIN: '/login',
-    // LOGOUT: '/login?logout=1',
-    // MANAGE_BUDGETS: '/manage-budgets',
-    // MANAGE_CARDS: '/cards',
-    // MANAGE_SCENARIOS: '/scenarios',
-    // PROFILE: '/user-settings',
-    // TRANSACTIONS: '/transactions',
+    WATCHLISTS: '/watchlists',
 });
 
 /**
@@ -96,21 +55,9 @@ export const ROUTES = Object.freeze({
  * @subcategory Router
  */
 export const ROUTES_FACTORY = Object.freeze({
-    // CREATE_BUDGET: (templateId: string | number) =>
-    //     `${ROUTES.CREATE_BUDGET}?templateId=${templateId}`,
-    // CREATE_SCENARIO: (templateId: string | number) =>
-    //     `${ROUTES.CREATE_SCENARIO}?templateId=${templateId}`,
-    // EDIT_BUDGET: (budgetId: string | number) =>
-    //     `${ROUTES.EDIT_BUDGET}/${budgetId}`,
-    // EDIT_CARD: (cardId: string | number) => `${ROUTES.EDIT_CARD}/${cardId}`,
-    // EDIT_SCENARIO: (scenarioId: string | number) =>
-    //     `${ROUTES.EDIT_SCENARIO}/${scenarioId}`,
-    // LOGIN: (returnAddr?: string) => `${ROUTES.LOGIN}?redirect=${returnAddr}`,
+    EDIT_WATCHLIST: (watchlistId: string) =>
+        ROUTES.EDIT_WATCHLIST.replace(':watchlistId', watchlistId),
 });
-
-// export const GO = Object.freeze({
-//     HOME: () => push(ROUTES.HOME)
-// })
 
 /**
  * React router config.
@@ -119,6 +66,30 @@ export const ROUTES_FACTORY = Object.freeze({
  * @subcategory Router
  */
 const router = createBrowserRouter([
+    {
+        path: ROUTES.ALL_INSTANCES,
+        element: (
+            <Layout>
+                <AllInstances />
+            </Layout>
+        ),
+    },
+    {
+        path: ROUTES.CREATE_WATCHLIST,
+        element: (
+            <Layout>
+                <EditWatchlist />
+            </Layout>
+        ),
+    },
+    {
+        path: ROUTES.EDIT_WATCHLIST,
+        element: (
+            <Layout>
+                <EditWatchlist />
+            </Layout>
+        ),
+    },
     {
         path: ROUTES.HOME,
         element: (
@@ -136,10 +107,10 @@ const router = createBrowserRouter([
         ),
     },
     {
-        path: ROUTES.ALL_INSTANCES,
+        path: ROUTES.WATCHLISTS,
         element: (
             <Layout>
-                <AllInstances />
+                <Watchlists />
             </Layout>
         ),
     },
@@ -159,14 +130,14 @@ export const navigation: INavigation = {
             location: ROUTES.HOME,
         },
         {
-            label: 'Simulate PCF',
-            Icon: IconHome,
-            location: ROUTES.SIM_PCF,
-        },
-        {
             label: 'All Instances',
             Icon: IconAllInstances,
             location: ROUTES.ALL_INSTANCES,
+        },
+        {
+            label: 'Watchlists',
+            Icon: IconWatchlist,
+            location: ROUTES.WATCHLISTS,
         },
         //     {
         //         label: 'Transactions',
@@ -214,6 +185,11 @@ export const navigation: INavigation = {
         //     },
     ],
     bottom: [
+        {
+            label: 'Simulate PCF',
+            Icon: IconPcfSim,
+            location: ROUTES.SIM_PCF,
+        },
         //     {
         //         label: 'Profile',
         //         Icon: IconUser,
