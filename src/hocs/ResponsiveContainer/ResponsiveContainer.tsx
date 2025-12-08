@@ -17,7 +17,6 @@ import useContentWidth from '../../hooks/useContentWidth';
  */
 const ResponsiveContainer: FC<IProps> = ({ children }) => {
     const { contentWidth } = useContentWidth();
-    console.log({ contentWidth });
     return (
         <Container
             disableGutters

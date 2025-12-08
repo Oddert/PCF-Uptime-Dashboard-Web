@@ -28,7 +28,6 @@ const RefreshButton: FC<IProps> = ({ pcfGuid }) => {
         } catch (error) {
             dispatch(intakeError(error));
         }
-        console.log(pcfGuid);
     };
     return (
         <IconButton onClick={handleClick} title='Refresh'>
