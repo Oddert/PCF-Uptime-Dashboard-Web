@@ -1,7 +1,7 @@
 import type { AppDispatch } from '../constants/store';
 
 import { intakeError } from './errorThunks';
-import { fetchAllInstances } from './instanceThunks';
+import { fetchAllInstances, fetchOrgNames } from './instanceThunks';
 
 /**
  * Performs a series of initial data loads when the app mounts.
@@ -12,6 +12,7 @@ import { fetchAllInstances } from './instanceThunks';
 export const initialAppLoad = (dispatch: AppDispatch) => () => {
     try {
         dispatch(fetchAllInstances());
+        dispatch(fetchOrgNames());
         dispatch({ type: 'socket/connect' });
     } catch (error: unknown) {
         dispatch(intakeError(error));
