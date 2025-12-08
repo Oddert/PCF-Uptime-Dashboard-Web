@@ -17,6 +17,7 @@ import {
     // StackedBarChart as IconBudget,
     // WaterfallChart as IconAllData,
     Home as IconHome,
+    DisplaySettings as IconAllInstances,
 } from '@mui/icons-material';
 import type { SvgIconTypeMap } from '@mui/material';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
@@ -31,6 +32,7 @@ import Layout from '../components/Layout';
 // import EditScenario from '../pages/EditScenario';
 import Home from '../pages/Home';
 import SimPCF from '../pages/SimPCF';
+import AllInstances from '../pages/AllInstances';
 // import Login from '../pages/Login';
 // import ManageBudgets from '../pages/ManageBudgets';
 // import ManageCards from '../pages/ManageCards';
@@ -63,6 +65,7 @@ export interface INavigation {
  * @subcategory Router
  */
 export const ROUTES = Object.freeze({
+    ALL_INSTANCES: '/all-instances',
     HOME: '/',
     SIM_PCF: '/simulate',
     // ALL_DATA: '/all-data',
@@ -132,6 +135,14 @@ const router = createBrowserRouter([
             </Layout>
         ),
     },
+    {
+        path: ROUTES.ALL_INSTANCES,
+        element: (
+            <Layout>
+                <AllInstances />
+            </Layout>
+        ),
+    },
 ]);
 
 /**
@@ -151,6 +162,11 @@ export const navigation: INavigation = {
             label: 'Simulate PCF',
             Icon: IconHome,
             location: ROUTES.SIM_PCF,
+        },
+        {
+            label: 'All Instances',
+            Icon: IconAllInstances,
+            location: ROUTES.ALL_INSTANCES,
         },
         //     {
         //         label: 'Transactions',
