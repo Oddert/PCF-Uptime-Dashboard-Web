@@ -12,6 +12,8 @@ import LoadingIndicator from '../LoadingIndicator';
  * Full display component for a list of instances.
  *
  * Must be supplied with instances & loading state as it is assumed some pre-processing might be required.
+ * @category Components
+ * @subcategory Instance Display
  * @component
  * @param props.instances List of instances to display.
  * @param props.loading True if the list of instances is loading.

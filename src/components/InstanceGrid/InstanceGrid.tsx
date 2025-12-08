@@ -7,8 +7,11 @@ import type { IProps } from './InstanceGrid.types';
 import InstanceCard from '../InstanceCard';
 
 /**
- * Renders a responsive grid of instances.
+ * Lower-order components to render a responsive grid of instances.
+ * @category Components
+ * @subcategory FallbackError
  * @component
+ * @param props.instances The list of instances to display.
  */
 const InstanceGrid: FC<IProps> = ({ instances }) => {
     return (

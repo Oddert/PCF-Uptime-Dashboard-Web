@@ -4,6 +4,12 @@ import { Box, Button, TextField, Typography, useTheme } from '@mui/material';
 
 import type { IProps } from './ThemeTester.types';
 
+/**
+ * Debug page component to test changes to the Theme by displaying variants of core components.
+ * @category Components
+ * @subcategory Theme Tester
+ * @component
+ */
 const ThemeTester: FC<IProps> = () => {
     const theme = useTheme();
     return (

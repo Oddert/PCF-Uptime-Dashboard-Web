@@ -10,6 +10,15 @@ import { updateInstance } from '../../../../redux/slices/instanceSlice';
 import { intakeError } from '../../../../redux/thunks/errorThunks';
 import InstanceService from '../../../../services/instance.service';
 
+/**
+ * Presents an IconButton refresh icon to request the re-load of a single metric.
+ * 
+ * Turns to a spinning loader while request is pending.
+ * @category Components
+ * @subcategory Refresh Button
+ * @param props.pcfGuid The PCF ID to re-request. Assumed to be safer than the Instance ID for this purpose.
+ * @component
+ */
 const RefreshButton: FC<IProps> = ({ pcfGuid }) => {
     const [loading, setLoading] = useState(false);
 

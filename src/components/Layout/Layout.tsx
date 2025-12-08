@@ -15,6 +15,7 @@ import Header from '../Header/Header';
  * @subcategory Layout
  * @component
  * @param props.children The page contents.
+ * @param props.requiresAuth If true, authentication will be required before rendering.
  */
 const Layout: FC<IProps> = ({
     children,

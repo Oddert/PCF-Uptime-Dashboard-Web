@@ -53,6 +53,13 @@ const getRagColourCode = (
     }
 };
 
+/**
+ * Displays a single Instance as a card.
+ * @category Components
+ * @subcategory Instance Card
+ * @component
+ * @param props.instance The Instance to display.
+ */
 const InstanceCard: FC<IProps> = ({ instance }) => {
     const [lastChange, setLastChange] = useState('');
     const [lastUpdate, setLastUpdate] = useState('');

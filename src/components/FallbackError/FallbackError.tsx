@@ -1,11 +1,19 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { IProps } from './FallbackError.types';
+import type { IProps } from './FallbackError.types';
 
+/**
+ * Generic error page to act as a final catch for unhandled exceptions.
+ * 
+ * Used by {@link ErrorBoundary}.
+ * @category Components
+ * @subcategory FallbackError
+ * @component
+ */
 const FallbackError: FC<IProps> = () => {
     const { t } = useTranslation();
     return (
