@@ -18,3 +18,23 @@ export const listAllInstances = createSelector(
     getInstanceState,
     (instanceState) => instanceState.instances,
 );
+
+/**
+ * True if the Instance request is pending.
+ * @category Redux
+ * @subcategory Selectors
+ */
+export const instancesLoading = createSelector(
+    getInstanceState,
+    (instanceState) => instanceState.loading,
+);
+
+/**
+ * Retrieves the organisation name mapping.
+ * @category Redux
+ * @subcategory Selectors
+ */
+export const orgNames = createSelector(
+    getInstanceState,
+    (instanceState) => instanceState.orgNames,
+);

@@ -14,6 +14,7 @@ export interface IInstanceState {
     instances: IInstance[];
     loaded: boolean;
     loading: boolean;
+    orgNames: Record<string, string>;
     timestamp: number;
 }
 
@@ -23,6 +24,7 @@ const initialState: IInstanceState = {
     instances: [],
     loaded: false,
     loading: false,
+    orgNames: {},
     timestamp: 0,
 };
 
@@ -44,10 +46,10 @@ export const instanceSlice = createSlice({
             { payload }: PayloadAction<{ instance: IInstance }>,
         ) {
             state.instances = state.instances.map((instance) => {
-                if (instance.instanceId === payload.instance.instanceId) {
-                    return payload.instance;
+                if (instance.pcfGuid === payload.instance.pcfGuid) {
+                    return { ...payload.instance, received: Date.now() };
                 }
-                return { ...instance, received: Date.now() };
+                return instance;
             });
         },
         updateMultipleInstances(
@@ -91,6 +93,14 @@ export const instanceSlice = createSlice({
             state.error = false;
             state.timestamp = Date.now();
         },
+        writeOrgIds(
+            state,
+            {
+                payload,
+            }: PayloadAction<{ orgNames: IInstanceState['orgNames'] }>,
+        ) {
+            state.orgNames = payload.orgNames;
+        },
     },
 });
 
@@ -100,6 +110,7 @@ export const {
     updateInstance,
     updateMultipleInstances,
     writeAllInstances,
+    writeOrgIds,
 } = instanceSlice.actions;
 
 export default instanceSlice.reducer;
