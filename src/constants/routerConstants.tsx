@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import {
+    DisplaySettings as IconAllInstances,
     // AutoAwesomeMotion as IconManageBudget,
     // CandlestickChart as IconBudgetOverview,
     // Category as IconCategory,
@@ -17,7 +18,6 @@ import {
     // StackedBarChart as IconBudget,
     // WaterfallChart as IconAllData,
     Home as IconHome,
-    DisplaySettings as IconAllInstances,
 } from '@mui/icons-material';
 import type { SvgIconTypeMap } from '@mui/material';
 import type { OverridableComponent } from '@mui/material/OverridableComponent';
@@ -30,9 +30,9 @@ import Layout from '../components/Layout';
 // import EditBudget from '../pages/EditBudget';
 // import EditCard from '../pages/EditCard';
 // import EditScenario from '../pages/EditScenario';
+import AllInstances from '../pages/AllInstances';
 import Home from '../pages/Home';
 import SimPCF from '../pages/SimPCF';
-import AllInstances from '../pages/AllInstances';
 // import Login from '../pages/Login';
 // import ManageBudgets from '../pages/ManageBudgets';
 // import ManageCards from '../pages/ManageCards';

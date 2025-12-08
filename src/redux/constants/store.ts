@@ -5,12 +5,14 @@ import { socketMiddleware } from '../middleware/socketMiddleware';
 import authReducer from '../slices/authSlice';
 import errorReducer from '../slices/errorSlice';
 import instanceReducer from '../slices/instanceSlice';
+import watchlistReducer from '../slices/watchlistSlice';
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         error: errorReducer,
         instance: instanceReducer,
+        watchlist: watchlistReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(socketMiddleware(new Socket())),
