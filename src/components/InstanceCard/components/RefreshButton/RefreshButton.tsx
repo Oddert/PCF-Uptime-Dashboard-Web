@@ -12,7 +12,7 @@ import InstanceService from '../../../../services/instance.service';
 
 /**
  * Presents an IconButton refresh icon to request the re-load of a single metric.
- * 
+ *
  * Turns to a spinning loader while request is pending.
  * @category Components
  * @subcategory Refresh Button

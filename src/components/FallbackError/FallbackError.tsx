@@ -8,7 +8,7 @@ import type { IProps } from './FallbackError.types';
 
 /**
  * Generic error page to act as a final catch for unhandled exceptions.
- * 
+ *
  * Used by {@link ErrorBoundary}.
  * @category Components
  * @subcategory FallbackError

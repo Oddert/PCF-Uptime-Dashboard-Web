@@ -52,7 +52,11 @@ const Home = () => {
             >
                 Welcome
             </Typography>
-            <InstanceDisplay instances={instances} loading={loading} />
+            <InstanceDisplay
+                highlightAlerts
+                instances={instances}
+                loading={loading}
+            />
             {/* </ResponsiveContainer> */}
         </Box>
     );
