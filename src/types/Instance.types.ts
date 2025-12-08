@@ -21,3 +21,8 @@ export interface IInstance {
 export interface IInstanceExtended extends IInstance {
     [key: string]: number | string | null | undefined;
 }
+
+export interface ISortedInstances {
+    highlighted: IInstance[];
+    other: IInstance[];
+}

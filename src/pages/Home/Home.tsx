@@ -1,11 +1,8 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
-import { Box, Divider, List, ListItem, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import type { IInstance } from '../../types/Instance.types';
-
-import InstanceCard from '../../components/InstanceCard';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import InstanceDisplay from '../../components/InstanceDisplay';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
 import {
     instancesLoading,
@@ -14,11 +11,6 @@ import {
 
 // import './Home.css';
 // import ResponsiveContainer from '../../hocs/ResponsiveContainer';
-
-interface ISortedInstances {
-    highlighted: IInstance[];
-    other: IInstance[];
-}
 
 /**
  * Main home page component.
@@ -42,20 +34,6 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const { highlighted, other }: ISortedInstances = useMemo(() => {
-        return instances.reduce(
-            (acc: ISortedInstances, each) => {
-                if (each.status === 'RUNNING') {
-                    acc.other.push(each);
-                } else {
-                    acc.highlighted.push(each);
-                }
-                return acc;
-            },
-            { highlighted: [], other: [] },
-        );
-    }, [instances]);
-
     return (
         //  <ResponsiveContainer>
         <Box
@@ -74,59 +52,7 @@ const Home = () => {
             >
                 Welcome
             </Typography>
-            {instances.length ? (
-                <Fragment>
-                    <Typography variant='h3'>Highlighted</Typography>
-                    <List
-                        sx={{
-                            width: '100%',
-                            // border: '1px dashed steelblue',
-                            display: 'grid',
-                            // gridAutoRows: 'minmax(100px, auto)',
-                            gridTemplateColumns:
-                                'repeat(auto-fit, minmax(100px, 400px))',
-                            margin: '0 auto',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        {highlighted.map((instance) => (
-                            <ListItem
-                                key={instance.instanceId}
-                                sx={{ display: 'block' }}
-                            >
-                                <InstanceCard instance={instance} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <Typography variant='h3'>Other</Typography>
-                    <List
-                        sx={{
-                            width: '100%',
-                            // border: '1px dashed steelblue',
-                            display: 'grid',
-                            // gridAutoRows: 'minmax(100px, auto)',
-                            gridTemplateColumns:
-                                'repeat(auto-fit, minmax(100px, 400px))',
-                            margin: '0 auto',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        {other.map((instance) => (
-                            <ListItem
-                                key={instance.instanceId}
-                                sx={{ display: 'block' }}
-                            >
-                                <InstanceCard instance={instance} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Fragment>
-            ) : loading ? (
-                <LoadingIndicator />
-            ) : (
-                <Typography>No instances found</Typography>
-            )}
+            <InstanceDisplay instances={instances} loading={loading} />
             {/* </ResponsiveContainer> */}
         </Box>
     );
