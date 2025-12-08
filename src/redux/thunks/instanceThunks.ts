@@ -8,6 +8,7 @@ import {
     instancesLoading,
     updateMultipleInstances,
     writeAllInstances,
+    writeOrgIds,
 } from '../slices/instanceSlice';
 
 import { intakeError } from './errorThunks';
@@ -31,6 +32,22 @@ export const fetchAllInstances = () => async (dispatch: AppDispatch) => {
         }
     } catch (error) {
         dispatch(instancesError());
+        dispatch(intakeError(error));
+    }
+};
+
+/**
+ * Loads the mapping of organisation IDs to names.
+ * @category Redux
+ * @subcategory Thunks
+ */
+export const fetchOrgNames = () => async (dispatch: AppDispatch) => {
+    try {
+        const response = await InstanceService.orgMapping();
+        if (response.status === 200) {
+            dispatch(writeOrgIds({ orgNames: response.orgNames }));
+        }
+    } catch (error) {
         dispatch(intakeError(error));
     }
 };
