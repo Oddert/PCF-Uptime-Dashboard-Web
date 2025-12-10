@@ -8,6 +8,17 @@ const components: Partial<Theme['components']> = {
             },
         },
     },
+    MuiFormControlLabel: {
+        defaultProps: {
+            slotProps: {
+                typography: {
+                    sx: {
+                        alignSelf: 'flex-start',
+                    },
+                },
+            },
+        },
+    },
 };
 
 export default components;
