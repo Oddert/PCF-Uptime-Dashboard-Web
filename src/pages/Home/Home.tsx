@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-    Autocomplete,
-    Box,
-    FormControlLabel,
-    TextField,
-    Typography,
-} from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 
 import type { IWatchlist } from '../../types/Watchlist.types';
 
@@ -63,30 +57,26 @@ const Home = () => {
                 // gridAutoRows: '400px',
             }}
         >
-            <Typography
+            {/* <Typography
                 sx={{ gridColumn: '1/-1', textAlign: 'left', mb: 4 }}
                 variant='h2'
             >
                 Welcome
-            </Typography>
-            <FormControlLabel
-                control={
-                    <Autocomplete
-                        getOptionKey={(opt) => opt.watchlistId}
-                        getOptionLabel={(opt) => opt.title}
-                        onChange={(_, nextWatchlist) => {
-                            if (nextWatchlist) {
-                                setSelectedWL(nextWatchlist);
-                            }
-                        }}
-                        options={watchlists}
-                        sx={{ minWidth: '300px' }}
-                        renderInput={(props) => <TextField {...props} />}
-                        value={selectedWL}
-                    />
-                }
-                label='Watchlist'
-                labelPlacement='top'
+            </Typography> */}
+            <Autocomplete
+                getOptionKey={(opt) => opt.watchlistId}
+                getOptionLabel={(opt) => opt.title}
+                onChange={(_, nextWatchlist) => {
+                    if (nextWatchlist) {
+                        setSelectedWL(nextWatchlist);
+                    }
+                }}
+                options={watchlists}
+                sx={{ minWidth: '300px', mb: 4 }}
+                renderInput={(props) => (
+                    <TextField variant='standard' {...props} />
+                )}
+                value={selectedWL}
             />
             <InstanceDisplay
                 highlightAlerts
