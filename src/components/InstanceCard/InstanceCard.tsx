@@ -137,9 +137,9 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
                     }}
                 >
                     <Tooltip
-                        title={new Date(instance.received).toLocaleString(
-                            'en-GB',
-                        )}
+                        title={`Last checked ${new Date(
+                            instance.received,
+                        ).toLocaleString('en-GB')}`}
                     >
                         <Typography sx={{ fontSize: '10px' }} variant='body2'>
                             {lastUpdate}
@@ -183,12 +183,18 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
                     </Box>
                 )}
             </Box>
-            <Typography
-                sx={{ gridColumn: '2 / -1', gridRow: 3, textAlign: 'right' }}
-                variant='body2'
-            >
-                {lastChange}
-            </Typography>
+            <Tooltip title='This is the date of the last change on PCF.'>
+                <Typography
+                    sx={{
+                        gridColumn: '2 / -1',
+                        gridRow: 3,
+                        textAlign: 'right',
+                    }}
+                    variant='body2'
+                >
+                    {lastChange}
+                </Typography>
+            </Tooltip>
         </Paper>
     );
 };
