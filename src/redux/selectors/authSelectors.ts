@@ -30,6 +30,16 @@ export const getIncorrectAuthDetails = createSelector(
 );
 
 /**
+ * Returns true if a request to login is pending.
+ * @category Redux
+ * @subcategory Selectors
+ */
+export const getAccessTokenPending = createSelector(
+    getAuthState,
+    (authState) => authState.accessRequestInProgress,
+);
+
+/**
  * Returns true if a request to the refresh token endpoint is pending.
  * @category Redux
  * @subcategory Selectors
@@ -37,6 +47,15 @@ export const getIncorrectAuthDetails = createSelector(
 export const getRefreshTokenPending = createSelector(
     getAuthState,
     (authState) => authState.refreshRequestInProgress,
+);
+
+/**
+ * Returns true if any auth request is pending (access or refresh tokens).
+ */
+export const getAuthRequestPending = createSelector(
+    getAccessTokenPending,
+    getRefreshTokenPending,
+    (accessPending, refreshPending) => accessPending || refreshPending,
 );
 
 /**

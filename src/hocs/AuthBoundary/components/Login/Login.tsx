@@ -3,6 +3,7 @@ import { type FC, type FormEvent, Fragment } from 'react';
 import {
     Box,
     Button,
+    CircularProgress,
     DialogContent,
     DialogTitle,
     TextField,
@@ -12,17 +13,32 @@ import {
 import type { IProps } from './Login.types';
 import type { LoginFormContent } from '../../AuthBoundary.types';
 
-import { useAppDispatch } from '../../../../hooks/ReduxHookWrappers';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../../hooks/ReduxHookWrappers';
+import { getAuthRequestPending } from '../../../../redux/selectors/authSelectors';
 import { loginUser } from '../../../../redux/thunks/authThunks';
 
+/**
+ * Displays a form to login.
+ * @category Higher Order Components
+ * @subcategory Auth Boundary
+ * @component
+ * @param props.setIsSignup Callback function to allow the mode to be changed from 'signup' to 'login'.
+ */
 const Login: FC<IProps> = ({ setIsSignup }) => {
     const dispatch = useAppDispatch();
+
+    const loading = useAppSelector(getAuthRequestPending);
 
     const handleSubmit = (event: FormEvent<LoginFormContent>) => {
         event.preventDefault();
         dispatch(
             loginUser(
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 event.currentTarget.username.value as string,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 event.currentTarget.password.value as string,
             ),
         );
@@ -48,14 +64,23 @@ const Login: FC<IProps> = ({ setIsSignup }) => {
                             name='password'
                             type='password'
                         />
-                        <Button type='submit' variant='contained'>
-                            Login
+                        <Button
+                            disabled={loading}
+                            type='submit'
+                            variant='contained'
+                        >
+                            {loading ? (
+                                <CircularProgress title='login request pending' />
+                            ) : (
+                                'Login'
+                            )}
                         </Button>
                     </Box>
                 </form>
                 <Typography textAlign='center' sx={{ mt: 3 }}>
                     Need an account?{' '}
                     <Button
+                        disabled={loading}
                         onClick={() => {
                             setIsSignup(true);
                         }}
