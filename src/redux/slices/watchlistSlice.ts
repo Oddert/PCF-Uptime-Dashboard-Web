@@ -29,6 +29,17 @@ export const watchlistSlice = createSlice({
     name: 'watchlist',
     initialState,
     reducers: {
+        changeDefault(
+            state,
+            { payload }: PayloadAction<{ watchlist: IWatchlist }>,
+        ) {
+            state.watchlists = state.watchlists.map((watchlist) => {
+                if (watchlist.watchlistId === payload.watchlist.watchlistId) {
+                    return payload.watchlist;
+                }
+                return { ...watchlist, isDefault: false };
+            });
+        },
         createWatchlist(
             state,
             { payload }: PayloadAction<{ watchlist: IWatchlist }>,
@@ -92,6 +103,7 @@ export const watchlistSlice = createSlice({
 });
 
 export const {
+    changeDefault,
     createWatchlist,
     deleteWatchlist,
     updateWatchlist,

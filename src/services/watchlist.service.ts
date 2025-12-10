@@ -64,6 +64,18 @@ const WatchlistService = Object.freeze({
     },
 
     /**
+     * Changes the user's default Watchlist to the current ID.
+     * @param watchlistId The ID to attempt to update.
+     * @param watchlist The watchlist parameters to update.
+     */
+    setDefault: async (watchlistId: string) => {
+        const response: IStandardResponse & {
+            watchlist: IWatchlist;
+        } = await request.put(`/watchlist/make-default/${watchlistId}`);
+        return response;
+    },
+
+    /**
      * Updates a Watchlist by ID.
      * @param watchlistId The ID to attempt to update.
      * @param watchlist The watchlist parameters to update.

@@ -3,6 +3,7 @@ import type { AppDispatch } from '../constants/store';
 import WatchlistService from '../../services/watchlist.service';
 import { instancesError } from '../slices/instanceSlice';
 import {
+    changeDefault,
     watchlistsLoading,
     writeAllWatchlists,
 } from '../slices/watchlistSlice';
@@ -30,3 +31,27 @@ export const fetchAllWatchlists = () => async (dispatch: AppDispatch) => {
         dispatch(intakeError(error));
     }
 };
+
+/**
+ * Changes the user's default Watchlist to the one matching the supplied ID.
+ * @category Redux
+ * @subcategory Thunks
+ * @param watchlistId The ID of the Watchlist to set as default.
+ */
+export const changeDefaultWatchlist =
+    (watchlistId: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(watchlistsLoading());
+            const response = await WatchlistService.setDefault(watchlistId);
+            if (response.status === 201) {
+                dispatch(
+                    changeDefault({
+                        watchlist: response.watchlist,
+                    }),
+                );
+            }
+        } catch (error) {
+            dispatch(instancesError());
+            dispatch(intakeError(error));
+        }
+    };

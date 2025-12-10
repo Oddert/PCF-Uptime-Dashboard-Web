@@ -4,7 +4,7 @@ import {
     Add as IconAdd,
     ChevronRight as IconRightArrow,
 } from '@mui/icons-material';
-import { Box, Button, ListItem, Paper, Typography } from '@mui/material';
+import { Box, Button, Chip, ListItem, Paper, Typography } from '@mui/material';
 
 import type { IProps } from './Watchlists.types';
 import type { TDynamicCardLayoutModes } from '../../types/Common.types';
@@ -16,8 +16,9 @@ import router, {
     ROUTES_FACTORY,
 } from '../../constants/routerConstants';
 import ResponsiveContainer from '../../hocs/ResponsiveContainer';
-import { useAppSelector } from '../../hooks/ReduxHookWrappers';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { allWatchlists } from '../../redux/selectors/watchlistSelectors';
+import { changeDefaultWatchlist } from '../../redux/thunks/watchlistThunks';
 
 /**
  * Displays all user Watchlists and allows them to edit.
@@ -28,6 +29,7 @@ import { allWatchlists } from '../../redux/selectors/watchlistSelectors';
 const Watchlists: FC<IProps> = () => {
     const [layout, setLayout] = useState<TDynamicCardLayoutModes>('standard');
     const watchlists = useAppSelector(allWatchlists);
+    const dispatch = useAppDispatch();
     return (
         <ResponsiveContainer>
             <Typography variant='h2'>Watchlists</Typography>
@@ -40,7 +42,9 @@ const Watchlists: FC<IProps> = () => {
                 }}
             >
                 <Button
-                    onClick={() => router.navigate(ROUTES.CREATE_WATCHLIST)}
+                    onClick={() => {
+                        router.navigate(ROUTES.CREATE_WATCHLIST);
+                    }}
                     variant='contained'
                 >
                     <IconAdd /> Create Watchlist
@@ -49,43 +53,82 @@ const Watchlists: FC<IProps> = () => {
             </Box>
             <DynamicCardList layout={layout}>
                 {watchlists.map((watchlist) => (
-                    <ListItem key={watchlist.watchlistId}>
+                    <ListItem
+                        key={watchlist.watchlistId}
+                        sx={{ height: '100%' }}
+                    >
                         <Paper
-                            component={Button}
-                            onClick={() =>
-                                router.navigate(
-                                    ROUTES_FACTORY.EDIT_WATCHLIST(
-                                        watchlist.watchlistId,
-                                    ),
-                                )
-                            }
                             sx={{
                                 width: '100%',
                                 height: '100%',
                                 display: 'flex',
+                                flexDirection: 'column',
                                 p: 2,
                             }}
                         >
-                            <Box sx={{ flex: 1 }}>
-                                <Typography textAlign={'left'} variant='h3'>
-                                    {watchlist.title}
-                                </Typography>
-                                {watchlist.description ? (
-                                    <Typography textAlign={'left'}>
-                                        {watchlist.description}
+                            {watchlist.isDefault ? (
+                                <Chip
+                                    color='success'
+                                    label='Default'
+                                    size='medium'
+                                    sx={{ alignSelf: 'flex-end' }}
+                                />
+                            ) : (
+                                <Chip
+                                    label='Make default'
+                                    onClick={() => {
+                                        dispatch(
+                                            changeDefaultWatchlist(
+                                                watchlist.watchlistId,
+                                            ),
+                                        );
+                                    }}
+                                    size='medium'
+                                    sx={{ alignSelf: 'flex-end' }}
+                                />
+                            )}
+                            <Button
+                                onClick={() => {
+                                    router.navigate(
+                                        ROUTES_FACTORY.EDIT_WATCHLIST(
+                                            watchlist.watchlistId,
+                                        ),
+                                    );
+                                }}
+                                sx={(theme) => ({
+                                    height: '100%',
+                                    display: 'flex',
+                                    color: theme.palette.text.primary,
+                                })}
+                            >
+                                <Box
+                                    sx={{
+                                        flex: 1,
+                                        alignSelf: 'stretch',
+                                    }}
+                                >
+                                    <Typography textAlign={'left'} variant='h3'>
+                                        {watchlist.title}
                                     </Typography>
-                                ) : null}
-                                <Typography textAlign={'left'}>
-                                    {watchlist.instances.length} instances
-                                </Typography>
-                            </Box>
-                            <IconRightArrow />
+                                    {watchlist.description ? (
+                                        <Typography textAlign={'left'}>
+                                            {watchlist.description}
+                                        </Typography>
+                                    ) : null}
+                                    <Typography textAlign={'left'}>
+                                        {watchlist.instances.length} instances
+                                    </Typography>
+                                </Box>
+                                <IconRightArrow />
+                            </Button>
                         </Paper>
                     </ListItem>
                 ))}
                 <ListItem sx={{ alignSelf: 'stretch' }}>
                     <Button
-                        onClick={() => router.navigate(ROUTES.CREATE_WATCHLIST)}
+                        onClick={() => {
+                            router.navigate(ROUTES.CREATE_WATCHLIST);
+                        }}
                         sx={{ width: '100%', height: '100%' }}
                         variant='outlined'
                     >
