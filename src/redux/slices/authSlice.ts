@@ -61,6 +61,8 @@ export const authSlice = createSlice({
             state.accessTokenExpires = 0;
             state.authenticated = false;
             state.user = null;
+            state.accessRequestInProgress = false;
+            state.refreshRequestInProgress = false;
         },
         clearIncorrectDetails(state) {
             state.incorrectDetails = false;

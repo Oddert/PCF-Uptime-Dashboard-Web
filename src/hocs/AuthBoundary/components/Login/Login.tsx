@@ -17,7 +17,7 @@ import {
     useAppDispatch,
     useAppSelector,
 } from '../../../../hooks/ReduxHookWrappers';
-import { getAuthRequestPending } from '../../../../redux/selectors/authSelectors';
+import { getAccessTokenPending } from '../../../../redux/selectors/authSelectors';
 import { loginUser } from '../../../../redux/thunks/authThunks';
 
 /**
@@ -30,7 +30,7 @@ import { loginUser } from '../../../../redux/thunks/authThunks';
 const Login: FC<IProps> = ({ setIsSignup }) => {
     const dispatch = useAppDispatch();
 
-    const loading = useAppSelector(getAuthRequestPending);
+    const loading = useAppSelector(getAccessTokenPending);
 
     const handleSubmit = (event: FormEvent<LoginFormContent>) => {
         event.preventDefault();
