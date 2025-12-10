@@ -28,9 +28,9 @@ const useWatchlist = (watchlistId?: string | null) => {
 
     const instances = useMemo(() => {
         if (watchlist) {
-            return allInstances.filter((instance) =>
-                watchlist.instances.includes(instance.instanceId),
-            );
+            return allInstances.filter((instance) => {
+                return watchlist.instances.includes(instance.pcfGuid);
+            });
         }
         return allInstances;
     }, [allInstances, watchlist]);
