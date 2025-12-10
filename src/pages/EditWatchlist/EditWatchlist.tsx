@@ -44,7 +44,9 @@ import DeleteWatchlist from './DeleteWatchlist';
  */
 const EditWatchlist: FC<IProps> = () => {
     const [stagedWatchlist, setStagedWatchlist] = useState<IWatchlist>(
-        createBlankWatchlist(),
+        createBlankWatchlist({
+            title: `New watchlist ${new Date().toLocaleString('en-GB')}`,
+        }),
     );
     const [instances, setInstances] = useState<IInstance[]>([]);
     const [loading, setLoading] = useState(false);
@@ -79,6 +81,7 @@ const EditWatchlist: FC<IProps> = () => {
         } catch (error) {
             dispatch(intakeError(error));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allInstances]);
 
     const handleClickSave = () => {
@@ -109,8 +112,6 @@ const EditWatchlist: FC<IProps> = () => {
                         dispatch(
                             updateWatchlist({ watchlist: response.watchlist }),
                         );
-                    } else {
-                        throw response;
                     }
                 } else {
                     const response = await WatchlistService.createWatchlist({
@@ -134,8 +135,6 @@ const EditWatchlist: FC<IProps> = () => {
                             createWatchlist({ watchlist: response.watchlist }),
                         );
                         setMessage('Watchlist created successfully');
-                    } else {
-                        throw response;
                     }
                 }
             } catch (error) {
@@ -148,7 +147,11 @@ const EditWatchlist: FC<IProps> = () => {
 
     return (
         <ResponsiveContainer>
-            <Button onClick={() => router.navigate(-1)}>
+            <Button
+                onClick={() => {
+                    router.navigate(-1);
+                }}
+            >
                 <IconBackArrow /> Back
             </Button>
             <Typography variant='h2'>
@@ -167,7 +170,17 @@ const EditWatchlist: FC<IProps> = () => {
             >
                 <Tooltip title='If selected, this Watchlist will appear on your homepage'>
                     <FormControlLabel
-                        control={<Switch defaultChecked />}
+                        control={
+                            <Switch
+                                checked={stagedWatchlist.isDefault}
+                                onChange={(_, checked) => {
+                                    setStagedWatchlist({
+                                        ...stagedWatchlist,
+                                        isDefault: checked,
+                                    });
+                                }}
+                            />
+                        }
                         label='Homepage default watchlist'
                     />
                 </Tooltip>
@@ -205,44 +218,48 @@ const EditWatchlist: FC<IProps> = () => {
                     label='Description (optional)'
                     labelPlacement='top'
                 />
-                <Box sx={{ display: 'flex' }}>
-                    <Button
-                        onClick={() => {
-                            setInstances(allInstances);
-                        }}
-                    >
-                        Add all instances
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setInstances([]);
-                        }}
-                    >
-                        Clear instance list
-                    </Button>
-                </Box>
-                <FormControlLabel
-                    control={
-                        <Autocomplete
-                            fullWidth
-                            getOptionKey={(opt) => opt.pcfGuid}
-                            getOptionLabel={(opt) =>
-                                opt.readableName !== opt.pcfAppName
-                                    ? `${opt.readableName} (${opt.pcfAppName})`
-                                    : opt.pcfAppName
-                            }
-                            multiple
-                            onChange={(_, value) => {
-                                setInstances(value);
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex' }}>
+                        <Button
+                            onClick={() => {
+                                setInstances(allInstances);
                             }}
-                            options={allInstances}
-                            renderInput={(props) => <TextField {...props} />}
-                            value={instances}
-                        />
-                    }
-                    label='Instances to include'
-                    labelPlacement='top'
-                />
+                        >
+                            Add all instances
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setInstances([]);
+                            }}
+                        >
+                            Clear instance list
+                        </Button>
+                    </Box>
+                    <FormControlLabel
+                        control={
+                            <Autocomplete
+                                fullWidth
+                                getOptionKey={(opt) => opt.pcfGuid}
+                                getOptionLabel={(opt) =>
+                                    opt.readableName !== opt.pcfAppName
+                                        ? `${opt.readableName} (${opt.pcfAppName})`
+                                        : opt.pcfAppName
+                                }
+                                multiple
+                                onChange={(_, value) => {
+                                    setInstances(value);
+                                }}
+                                options={allInstances}
+                                renderInput={(props) => (
+                                    <TextField {...props} />
+                                )}
+                                value={instances}
+                            />
+                        }
+                        label='Instances to include'
+                        labelPlacement='top'
+                    />
+                </Box>
                 <Button
                     onClick={handleClickSave}
                     size='large'
