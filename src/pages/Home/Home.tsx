@@ -1,13 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import {
+    Autocomplete,
+    Box,
+    FormControlLabel,
+    TextField,
+    Typography,
+} from '@mui/material';
+
+import type { IWatchlist } from '../../types/Watchlist.types';
 
 import InstanceDisplay from '../../components/InstanceDisplay';
 import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
-import {
-    instancesLoading,
-    listAllInstances,
-} from '../../redux/selectors/instanceSelectors';
+import useWatchlist from '../../hooks/useWatchlist';
+import { instancesLoading } from '../../redux/selectors/instanceSelectors';
+import { defaultWatchlist } from '../../redux/selectors/watchlistSelectors';
+import { createWatchlist } from '../../utils/factories';
 
 // import './Home.css';
 // import ResponsiveContainer from '../../hocs/ResponsiveContainer';
@@ -23,8 +31,17 @@ import {
 const Home = () => {
     const dispatch = useAppDispatch();
 
-    const instances = useAppSelector(listAllInstances);
+    const defaultWL = useAppSelector(defaultWatchlist);
     const loading = useAppSelector(instancesLoading);
+
+    const [selectedWL, setSelectedWL] = useState<IWatchlist>(createWatchlist());
+    const { instances, watchlists } = useWatchlist(selectedWL.watchlistId);
+
+    useEffect(() => {
+        if (defaultWL) {
+            setSelectedWL(defaultWL);
+        }
+    }, [defaultWL]);
 
     useEffect(() => {
         dispatch({ type: 'socket/connect' });
@@ -52,6 +69,25 @@ const Home = () => {
             >
                 Welcome
             </Typography>
+            <FormControlLabel
+                control={
+                    <Autocomplete
+                        getOptionKey={(opt) => opt.watchlistId}
+                        getOptionLabel={(opt) => opt.title}
+                        onChange={(_, nextWatchlist) => {
+                            if (nextWatchlist) {
+                                setSelectedWL(nextWatchlist);
+                            }
+                        }}
+                        options={watchlists}
+                        sx={{ minWidth: '300px' }}
+                        renderInput={(props) => <TextField {...props} />}
+                        value={selectedWL}
+                    />
+                }
+                label='Watchlist'
+                labelPlacement='top'
+            />
             <InstanceDisplay
                 highlightAlerts
                 instances={instances}
