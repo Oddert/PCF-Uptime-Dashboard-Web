@@ -35,7 +35,7 @@ export const watchlistSlice = createSlice({
         ) {
             state.watchlists.push(payload.watchlist);
             state.watchlists = state.watchlists.sort((a, b) =>
-                String(a.title) < String(b.title) ? 1 : -1,
+                a.title < b.title ? 1 : -1,
             );
             if (payload.watchlist.isDefault) {
                 state.defaultWatchlist = payload.watchlist;
@@ -86,7 +86,7 @@ export const watchlistSlice = createSlice({
             state.watchlists = payload.watchlists;
             state.defaultWatchlist =
                 payload.watchlists.find((watchlist) => watchlist.isDefault) ??
-                null;
+                payload.watchlists[0];
         },
     },
 });
