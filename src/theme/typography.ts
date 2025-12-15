@@ -10,6 +10,9 @@ const typography: Partial<Theme['typography']> = {
     h3: {
         fontSize: '24px',
     },
+    h4: {
+        fontSize: '20px',
+    },
 };
 
 export default typography;
