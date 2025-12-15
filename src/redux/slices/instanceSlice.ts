@@ -1,7 +1,10 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import type { ICollection } from '../../types/Collection.type';
-import type { IInstance } from '../../types/Instance.types';
+import type {
+    IInstance,
+    IInstanceAttributes,
+} from '../../types/Instance.types';
 
 /**
  * Redux state key for 'instance'
@@ -74,6 +77,20 @@ export const instanceSlice = createSlice({
                 return instance;
             });
         },
+        updateUserOverrides(
+            state,
+            { payload }: PayloadAction<{ userOverrides: IInstanceAttributes }>,
+        ) {
+            state.instances = state.instances.map((instance) => {
+                if (instance.pcfGuid === payload.userOverrides.pcfGuid) {
+                    return {
+                        ...instance,
+                        userOverrides: payload.userOverrides,
+                    };
+                }
+                return instance;
+            });
+        },
         writeAllInstances(
             state,
             {
@@ -109,6 +126,7 @@ export const {
     instancesLoading,
     updateInstance,
     updateMultipleInstances,
+    updateUserOverrides,
     writeAllInstances,
     writeOrgIds,
 } = instanceSlice.actions;
