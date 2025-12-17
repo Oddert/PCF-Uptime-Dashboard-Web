@@ -4,59 +4,25 @@ import { EditSquare as IconEdit } from '@mui/icons-material';
 import {
     Box,
     Button,
-    type ButtonProps,
     Chip,
     Dialog,
     DialogContent,
     Paper,
-    type Theme,
     Tooltip,
     Typography,
     useTheme,
 } from '@mui/material';
 
 import type { IProps } from './InstanceCard.types';
-import type { IInstance } from '../../types/Instance.types';
 
 import { useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { orgNames } from '../../redux/selectors/instanceSelectors';
+import { getRagCSSColour, getRagColourCode } from '../../utils/ragUtils';
 import { displayTimeFrom } from '../../utils/timeUtils';
 
 import TaskList from './TaskList/TaskList';
 import EditDetailsForm from './components/EditDetailsForm';
 import RefreshButton from './components/RefreshButton';
-
-const getRag = (theme: Theme, status: IInstance['status']) => {
-    switch (status) {
-        case 'RUNNING':
-            return theme.palette.success.main;
-        case 'STARTING':
-            return theme.palette.warning.main;
-        case 'DOWN':
-            return theme.palette.error.main;
-        case 'STOPPED':
-            return theme.palette.info.main;
-        default:
-            return 'transparent';
-    }
-};
-
-const getRagColourCode = (
-    status: IInstance['status'],
-): ButtonProps['color'] => {
-    switch (status) {
-        case 'RUNNING':
-            return 'success';
-        case 'STARTING':
-            return 'warning';
-        case 'DOWN':
-            return 'error';
-        case 'STOPPED':
-            return 'info';
-        default:
-            return 'primary';
-    }
-};
 
 /**
  * Displays a single Instance as a card.
@@ -131,7 +97,7 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
                     px: 3,
                     py: 1,
                     borderLeft: '5px solid transparent',
-                    borderLeftColor: getRag(theme, instance.status),
+                    borderLeftColor: getRagCSSColour(theme, instance.status),
                     display: 'grid',
                     gridGap: '8px',
                     gridTemplateColumns: 'auto auto auto',
