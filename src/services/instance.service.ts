@@ -80,6 +80,20 @@ const InstanceService = Object.freeze({
         } = await request.put(`/instance/user-overrides/${pcfGuid}`, payload);
         return response;
     },
+
+    /**
+     * For demo purposes.
+     *
+     * Allows you to manually push a status to an instance.
+     * @param pcfGuid The Instance to alter.
+     * @param action The new status to push.
+     */
+    demoRoute: async (pcfGuid: string, action: string) => {
+        const response: IStandardResponse = await request.put(
+            `/instance/demo/${pcfGuid}/${action}`,
+        );
+        return response;
+    },
 });
 
 export default InstanceService;
