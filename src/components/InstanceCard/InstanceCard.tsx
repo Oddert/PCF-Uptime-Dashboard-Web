@@ -15,8 +15,9 @@ import {
 
 import type { IProps } from './InstanceCard.types';
 
-import { useAppSelector } from '../../hooks/ReduxHookWrappers';
+import { useAppDispatch, useAppSelector } from '../../hooks/ReduxHookWrappers';
 import { orgNames } from '../../redux/selectors/instanceSelectors';
+import { clearFlash } from '../../redux/slices/instanceSlice';
 import { getRagCSSColour, getRagColourCode } from '../../utils/ragUtils';
 import { displayTimeFrom } from '../../utils/timeUtils';
 
@@ -39,8 +40,8 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
 
     const organisationNames = useAppSelector(orgNames);
 
+    const dispatch = useAppDispatch();
     const ref = useRef(0);
-
     const theme = useTheme();
 
     const orgName = useMemo(
@@ -90,6 +91,17 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
         };
     }, [instance.updatedAt, instance.received]);
 
+    useEffect(() => {
+        if (instance.flash) {
+            const timeout = setTimeout(() => {
+                dispatch(clearFlash({ pcfGuid: instance.pcfGuid }));
+            }, 20000);
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [dispatch, instance.flash, instance.pcfGuid]);
+
     return (
         <Fragment>
             <Paper
@@ -97,6 +109,7 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
                     px: 3,
                     py: 1,
                     borderLeft: '5px solid transparent',
+                    borderRight: '5px solid transparent',
                     borderLeftColor: getRagCSSColour(theme, instance.status),
                     display: 'grid',
                     gridGap: '8px',
@@ -104,6 +117,22 @@ const InstanceCard: FC<IProps> = ({ instance }) => {
                     alignItems: 'start',
                     height: '100%',
                     position: 'relative',
+                    ...(instance.flash
+                        ? {
+                              '&:before': {
+                                  content: '""',
+                                  zIndex: -100,
+                                  position: 'absolute',
+                                  opacity: 0.2,
+                                  borderRadius: '4px',
+                                  top: '-5px',
+                                  left: '-13px',
+                                  width: 'calc(100% + 26px)',
+                                  height: 'calc(100% + 10px)',
+                                  background: theme.palette.info.light,
+                              },
+                          }
+                        : {}),
                 }}
             >
                 <Button

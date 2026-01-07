@@ -1,6 +1,7 @@
 export interface IInstance {
     contactInfo: string;
     createdAt: number;
+    flash?: boolean;
     instanceId: string;
     message: string;
     pcfAppName: string;

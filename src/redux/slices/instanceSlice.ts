@@ -31,10 +31,33 @@ const initialState: IInstanceState = {
     timestamp: 0,
 };
 
+const orderInstancesById = (instances: IInstance[]) => {
+    const instancesById = instances.reduce(
+        (acc: Record<string, IInstance>, instance) => {
+            acc[instance.pcfGuid] = {
+                ...instance,
+                flash: instance.flash,
+                received: Date.now(),
+            };
+            return acc;
+        },
+        {},
+    );
+    return instancesById;
+};
+
 export const instanceSlice = createSlice({
     name: 'instance',
     initialState,
     reducers: {
+        clearFlash(state, { payload }: PayloadAction<{ pcfGuid: string }>) {
+            state.instances = state.instances.map((instance) => {
+                if (instance.pcfGuid === payload.pcfGuid) {
+                    return { ...instance, flash: false };
+                }
+                return instance;
+            });
+        },
         instancesError(state) {
             state.loading = false;
             state.error = true;
@@ -50,31 +73,45 @@ export const instanceSlice = createSlice({
         ) {
             state.instances = state.instances.map((instance) => {
                 if (instance.pcfGuid === payload.instance.pcfGuid) {
-                    return { ...payload.instance, received: Date.now() };
+                    if (payload.instance.status !== instance.status) {
+                        return {
+                            ...payload.instance,
+                            flash: true,
+                            received: Date.now(),
+                        };
+                    }
+                    return {
+                        ...payload.instance,
+                        flash: instance.flash,
+                        received: Date.now(),
+                    };
                 }
-                return instance;
+                return { ...instance, flash: instance.flash };
             });
         },
         updateMultipleInstances(
             state,
             { payload }: PayloadAction<{ instances: IInstance[] }>,
         ) {
-            const instancesById = payload.instances.reduce(
-                (acc: Record<string, IInstance>, instance) => {
-                    acc[instance.instanceId] = {
-                        ...instance,
-                        received: Date.now(),
-                    };
-                    return acc;
-                },
-                {},
-            );
+            const instancesById = orderInstancesById(payload.instances);
 
             state.instances = state.instances.map((instance) => {
-                if (instance.instanceId in instancesById) {
-                    return instancesById[instance.instanceId];
+                if (instance.pcfGuid in instancesById) {
+                    if (
+                        instance.status !==
+                        instancesById[instance.pcfGuid].status
+                    ) {
+                        return {
+                            ...instancesById[instance.pcfGuid],
+                            flash: true,
+                        };
+                    }
+                    return {
+                        ...instancesById[instance.pcfGuid],
+                        flash: instance.flash,
+                    };
                 }
-                return instance;
+                return { ...instance, flash: instance.flash };
             });
         },
         updateUserOverrides(
@@ -100,11 +137,25 @@ export const instanceSlice = createSlice({
                 collections: ICollection[];
             }>,
         ) {
-            state.collections = payload.collections;
-            state.instances = payload.instances.map((instance) => ({
-                ...instance,
-                received: Date.now(),
-            }));
+            const instancesById = orderInstancesById(state.instances);
+            state.instances = payload.instances.map((instance) => {
+                if (instance.pcfGuid in instancesById) {
+                    if (
+                        instance.status !==
+                        instancesById[instance.pcfGuid].status
+                    ) {
+                        return {
+                            ...instance,
+                            flash: true,
+                            received: Date.now(),
+                        };
+                    }
+                }
+                return {
+                    ...instance,
+                    received: Date.now(),
+                };
+            });
             state.loaded = true;
             state.loading = false;
             state.error = false;
@@ -122,6 +173,7 @@ export const instanceSlice = createSlice({
 });
 
 export const {
+    clearFlash,
     instancesError,
     instancesLoading,
     updateInstance,
