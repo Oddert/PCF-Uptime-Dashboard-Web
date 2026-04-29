@@ -1,10 +1,6 @@
 {
   "compilerOptions": {},
   "exclude": ["node_modules/**/*"],
-  "files": [],
-  "include": ["src", "custom.d.ts", "eslint.config.js"],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": [],
+  "references": []
 }
