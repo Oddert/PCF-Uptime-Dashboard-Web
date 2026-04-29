@@ -1,6 +1,6 @@
 import { type FC, useState } from 'react';
 
-import { Dialog } from '@mui/material';
+import { Dialog, Typography } from '@mui/material';
 
 import type { IProps } from './AuthBoundary.types';
 

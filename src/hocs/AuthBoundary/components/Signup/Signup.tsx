@@ -107,6 +107,9 @@ const Signup: FC<IProps> = ({ setIsSignup }) => {
                         Log in
                     </Button>
                 </Typography>
+                <Typography sx={theme => ({ color: theme.palette.grey[500], mt: 2 })} variant='subtitle2'>
+                    PCF Dashboard build id {process.env.BUILD_ID}
+                </Typography>
             </DialogContent>
         </Fragment>
     );
