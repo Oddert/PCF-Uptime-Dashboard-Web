@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { ListItem } from '@mui/material';
 
 import NavLink from '../NavLink';
 import SubMenu from '../SubMenu';
 
-import { IProps } from './NavItem.types';
+import type { IProps } from './NavItem.types';
 
 /**
  * Renders a single list item as one of the sub-types.

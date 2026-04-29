@@ -1,10 +1,10 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import { Box, List } from '@mui/material';
 
 import { navigation } from '../../constants/routerConstants';
 
-import { IProps } from './SidebarOptions.types';
+import type { IProps } from './SidebarOptions.types';
 import NavItem from './components/NavItem';
 
 /**
