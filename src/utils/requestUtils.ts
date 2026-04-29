@@ -5,13 +5,21 @@ import { AxiosError } from 'axios';
 
 import type { IStandardResponse } from '../types/Request.types';
 
+import { API_URLS } from '../constants/apiConstants';
+
 /**
  * Determines the base URL used to communicate with the server.
  * @returns
  */
 export const getServerURL = (): string => {
     // Temporary hard-coded value. Swap with selection logic if / when hosting method established.
-    return 'http://localhost:8081/api/v0';
+    switch (process.env.BUILD_ENV) {
+        case 'production':
+            return API_URLS.PRD;
+        case 'localhost':
+        default:
+            return API_URLS.LOCAL;
+    }
 };
 
 export type TRetryFunc<IApiCaller, IResponse> = (
