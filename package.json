@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc -b && vite build",
-    "build:prd": "cross-env BUILD_ENV=production && tsc -b && vite build",
+    "build": "cross-env NODE_ENV=development && tsc -b && vite build",
+    "build:prd": "cross-env NODE_ENV=production && tsc -b && vite build",
     "lint": "eslint --config eslint.config.js",
     "lint:fix": "eslint --config eslint.config.js --fix",
     "preview": "vite preview"

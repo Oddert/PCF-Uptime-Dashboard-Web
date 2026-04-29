@@ -12,8 +12,7 @@ import { API_URLS } from '../constants/apiConstants';
  * @returns
  */
 export const getServerURL = (): string => {
-    // Temporary hard-coded value. Swap with selection logic if / when hosting method established.
-    switch (process.env.BUILD_ENV) {
+    switch (process.env.NODE_ENV) {
         case 'production':
             return API_URLS.PRD;
         case 'localhost':
