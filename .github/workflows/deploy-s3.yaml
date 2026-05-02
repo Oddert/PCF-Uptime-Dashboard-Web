@@ -26,13 +26,13 @@ jobs:
         run: npm install
 
       - name: Build the project
-        run: npm run build
+        run: npm run dist
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: build/
+          name: dist
+          path: dist/
 
   cd:
     name: Continuous Deployment
@@ -47,7 +47,7 @@ jobs:
       - name: Download Build Artifact
         uses: actions/download-artifact@v3
         with:
-          name: build
+          name: dist
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
